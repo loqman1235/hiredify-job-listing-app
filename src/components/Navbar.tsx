@@ -1,14 +1,6 @@
-import Link from "next/link";
 import Brand from "./common/Brand";
 import Button from "./common/Button";
-
-const navLinks = [
-  { text: "home", href: "/" },
-  { text: "find jobs", href: "/find" },
-  { text: "blog", href: "/bog" },
-  { text: "about", href: "/about" },
-  { text: "contact", href: "/contact" },
-] as const;
+import NavLinks from "./NavLinks";
 
 const Navbar = () => {
   return (
@@ -16,16 +8,7 @@ const Navbar = () => {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-10">
         <div className="flex items-center gap-20">
           <Brand />
-          <ul className="flex items-center gap-7">
-            {navLinks.map((link) => (
-              <li
-                key={link.text}
-                className="font-medium capitalize transition hover:text-[var(--primary)]"
-              >
-                <Link href={link.href}>{link.text}</Link>
-              </li>
-            ))}
-          </ul>
+          <NavLinks />
         </div>
 
         <div className="flex items-center gap-2">
