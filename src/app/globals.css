@@ -5,17 +5,17 @@
 :root {
   --gradient-blue-1: #e3ebf8;
   --gradient-blue-2: #f1f4fb;
-  --primary: #1967d2;
+  --primary: #3a81f7;
   --background: #f5f7fc;
   --text: #202124;
   --text-light: #77838f;
   --text-muted: #e9ebed;
 
   /* BUTTONS */
-  --primary-btn-bg: #1967d2;
+  --primary-btn-bg: #3a81f7;
   --primary-btn-text: #fff;
   --secondary-btn-bg: #dfe7f7;
-  --secondary-btn-text: #1967d2;
+  --secondary-btn-text: #3a81f7;
 }
 
 @layer base {
