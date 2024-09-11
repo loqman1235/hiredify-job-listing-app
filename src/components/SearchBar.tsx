@@ -3,7 +3,7 @@ import Button from "./common/Button";
 
 const SearchBar = () => {
   return (
-    <form className="flex h-[100px] w-full items-center gap-10 rounded-xl border bg-[var(--foreground)] p-5 shadow-sm">
+    <form className="flex h-[100px] w-full items-center gap-10 rounded-xl border bg-foreground p-5 shadow-sm">
       <div className="flex h-full flex-1 items-center gap-4">
         <div className="flex h-full items-center gap-4 border-r border-r-[var(--border)]">
           <PiMagnifyingGlass className="size-6 text-[var(--text-icon)]" />

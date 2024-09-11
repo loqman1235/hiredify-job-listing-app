@@ -19,7 +19,7 @@ const NavLinks = () => {
       {navLinks.map((link) => (
         <li
           key={link.text}
-          className={` ${pathname === link.href ? "text-[var(--primary)]" : "text-[var(--text)]"} font-medium capitalize transition hover:text-[var(--primary)]`}
+          className={` ${pathname === link.href ? "text-primary" : "text-[var(--text)]"} hover:text-primary font-medium capitalize transition`}
         >
           <Link href={link.href}>{link.text}</Link>
         </li>

@@ -5,9 +5,9 @@
 :root {
   --gradient-blue-1: #e3ebf8;
   --gradient-blue-2: #f1f4fb;
-  --primary: #3a81f7;
-  --background: #f5f7fc;
-  --foreground: #fff;
+  --primary: 217 92% 60%;
+  --background: 223 54% 97%;
+  --foreground: 0 0% 100%;
   --text: #031c45; /*#202124*/
   --text-light: #77838f;
   --text-icon: #696969;
@@ -25,5 +25,27 @@
 @layer base {
   body {
     @apply text-[var(--text)];
+  }
+}
+
+@layer utilities {
+  .bounce {
+    animation: bounce 4s infinite ease-in-out;
+  }
+}
+
+/* Create animation */
+
+@keyframes bounce {
+  0% {
+    transform: translateX(0%);
+  }
+
+  50% {
+    transform: translateX(-5%);
+  }
+
+  100% {
+    transform: translateX(0%);
   }
 }
