@@ -13,7 +13,8 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const variants = {
-    primary: "bg-[var(--primary-btn-bg)] text-[var(--primary-btn-text)]",
+    primary:
+      "bg-[var(--primary-btn-bg)] text-[var(--primary-btn-text)] hover:bg-[var(--primary-btn-bg-hover)]",
     secondary:
       "bg-[var(--secondary-btn-bg)] text-[var(--secondary-btn-text)] hover:bg-[var(--primary-btn-bg)] hover:text-[var(--primary-btn-text)]",
   };
