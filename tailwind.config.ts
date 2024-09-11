@@ -12,6 +12,10 @@ const config: Config = {
         primary: "hsl(var(--primary))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        text: {
+          primary: "hsl(var(--text))",
+          secondary: "hsl(var(--text-light))",
+        },
       },
     },
   },

@@ -8,8 +8,8 @@
   --primary: 217 92% 60%;
   --background: 223 54% 97%;
   --foreground: 0 0% 100%;
-  --text: #031c45; /*#202124*/
-  --text-light: #77838f;
+  --text: 217 92% 14%; /*#202124*/
+  --text-light: 210 10% 51%;
   --text-icon: #696969;
   --text-muted: #e9ebed;
   --border: #ecedf2;
@@ -24,13 +24,17 @@
 
 @layer base {
   body {
-    @apply text-[var(--text)];
+    @apply text-text-primary;
   }
 }
 
 @layer utilities {
   .bounce {
-    animation: bounce 4s infinite ease-in-out;
+    animation: bounce 6s infinite ease-in-out;
+  }
+
+  .bounce-reverse {
+    animation: bounce-reverse 6s infinite ease-in-out;
   }
 }
 
@@ -43,6 +47,20 @@
 
   50% {
     transform: translateX(-5%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes bounce-reverse {
+  0% {
+    transform: translateX(0%);
+  }
+
+  50% {
+    transform: translateX(5%);
   }
 
   100% {

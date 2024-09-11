@@ -23,7 +23,7 @@ const InfoCard = ({ Icon, title, description, className }: InfoCardProps) => {
 
       <ul>
         <li className="text-[15px] font-semibold">{title}</li>
-        <li className="text-sm text-[var(--text-light)]">{description}</li>
+        <li className="text-text-secondary text-sm">{description}</li>
       </ul>
     </div>
   );

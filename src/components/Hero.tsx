@@ -1,13 +1,6 @@
-import Image from "next/image";
+import HeroImage from "./HeroImage";
 import Navbar from "./Navbar";
 import SearchBar from "./SearchBar";
-import HeroImage from "@/assets/images/hero-img.svg";
-import InfoCard from "./InfoCard";
-import {
-  PiBookmarkSimpleLight,
-  PiCurrencyDollarLight,
-  PiMagnifyingGlassLight,
-} from "react-icons/pi";
 
 const Hero = () => {
   return (
@@ -27,28 +20,7 @@ const Hero = () => {
         </div>
         {/* IMAGE */}
         <div className="relative hidden w-[360px] md:block">
-          <Image src={HeroImage} width={360} alt="hero image" />
-
-          <div className="absolute bottom-0 flex w-full flex-col gap-5">
-            <InfoCard
-              Icon={PiMagnifyingGlassLight}
-              title="Easy job search"
-              description="Find jobs based on your skills"
-              className="bounce -ml-10"
-            />
-            <InfoCard
-              Icon={PiCurrencyDollarLight}
-              title="Salary Insights"
-              description="View salary data for roles"
-              className="bounce self-end delay-75"
-            />
-            <InfoCard
-              Icon={PiBookmarkSimpleLight}
-              title="Saved Jobs"
-              description="Save listings to apply later"
-              className="bounce delay-100"
-            />
-          </div>
+          <HeroImage />
         </div>
       </div>
     </div>
