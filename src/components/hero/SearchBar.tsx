@@ -1,5 +1,6 @@
-import { PiCaretDown, PiMagnifyingGlass, PiMapPin } from "react-icons/pi";
-import Button from "./common/Button";
+import { PiMagnifyingGlass, PiMapPin } from "react-icons/pi";
+import Button from "@/components/common/Button";
+import SelectBox from "../common/SelectBox";
 
 const SearchBar = () => {
   return (
@@ -12,7 +13,7 @@ const SearchBar = () => {
             name="jobTitle"
             id="jobTitle"
             placeholder="Job Title, Keyword..."
-            className="placeholder:text-text-secondary bg-transparent outline-none"
+            className="bg-transparent outline-none placeholder:text-text-secondary"
           />
         </div>
 
@@ -20,13 +21,11 @@ const SearchBar = () => {
           <PiMapPin className="size-6 text-[var(--text-icon)]" />
 
           <div className="relative flex flex-1 items-center justify-between">
-            <select className="text-text-secondary w-full appearance-none bg-transparent outline-none">
-              <option value="1">City or postcode</option>
-              <option value="1"></option>
-              <option value="1"></option>
-              <option value="1"></option>
-            </select>
-            <PiCaretDown className="pointer-events-none absolute right-0 top-1/2 size-5 -translate-y-1/2 text-[var(--text-icon)]" />
+            <SelectBox
+              options={["CA, Los Angeles", "NY, New York", "CA, Los Angeles"]}
+              defaultText="City or postcode"
+              className="w-full p-0"
+            />
           </div>
         </div>
       </div>

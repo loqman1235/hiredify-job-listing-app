@@ -1,5 +1,5 @@
-import Brand from "./common/Brand";
-import Button from "./common/Button";
+import Brand from "@/components/common/Brand";
+import Button from "@/components/common/Button";
 import NavLinks from "./NavLinks";
 
 const Navbar = () => {

@@ -1,16 +1,17 @@
-import Hero from "@/components/Hero";
-import Section from "@/components/Section";
+import { Hero } from "@/components/hero";
+import {
+  CategoriesSection,
+  FeaturedJobsSection,
+  TestimonialsSection,
+} from "@/components/sections";
 
 export default function Home() {
   return (
     <main>
       <Hero />
-      <Section
-        title="Explore Categories"
-        description="Find the perfect job by browsing through our diverse range of categories."
-      >
-        items{" "}
-      </Section>
+      <CategoriesSection />
+      <FeaturedJobsSection />
+      <TestimonialsSection />
     </main>
   );
 }
