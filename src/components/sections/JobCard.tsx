@@ -5,7 +5,7 @@ import { PiBriefcase, PiMapPin, PiMoney } from "react-icons/pi";
 
 const JobCard = () => {
   return (
-    <div className="flex items-center gap-5 rounded-md bg-foreground p-5 shadow-sm">
+    <div className="flex items-center gap-5 rounded-xl bg-foreground p-5 shadow-sm">
       {/* LOGO */}
       <div className="bg-muted flex h-12 w-12 items-center justify-center overflow-hidden rounded-md p-1">
         <Image src={netflixLogoImg} alt="netflix" width={50} height={50} />
