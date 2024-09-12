@@ -1,14 +1,31 @@
-import netflixLogoImg from "@/assets/images/logos/netflix.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { PiBriefcase, PiMapPin, PiMoney } from "react-icons/pi";
 
-const JobCard = () => {
+type JobCardProps = {
+  image: string;
+  title: string;
+  category: string;
+  location: string;
+  minSalary: number;
+  maxSalary: number;
+  type: string;
+};
+
+const JobCard = ({
+  image,
+  title,
+  category,
+  location,
+  minSalary,
+  maxSalary,
+  type,
+}: JobCardProps) => {
   return (
     <div className="flex items-center gap-5 rounded-xl bg-foreground p-5 shadow-sm">
       {/* LOGO */}
-      <div className="bg-muted flex h-12 w-12 items-center justify-center overflow-hidden rounded-md p-1">
-        <Image src={netflixLogoImg} alt="netflix" width={50} height={50} />
+      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-md bg-muted p-1">
+        <Image src={image} alt={title} width={50} height={50} />
       </div>
 
       <div className="flex flex-col gap-2">
@@ -16,23 +33,21 @@ const JobCard = () => {
           className="text-lg font-semibold tracking-tight transition hover:text-primary"
           href="/"
         >
-          Software Engineer
+          {title}
         </Link>
         <ul className="flex items-center gap-5">
           <li className="flex items-center gap-1">
             <span className="text-[var(--text-icon)]">
               <PiBriefcase className="size-4" />
             </span>
-            <span className="text-sm text-text-secondary">Technology</span>
+            <span className="text-sm text-text-secondary">{category}</span>
           </li>
 
           <li className="flex items-center gap-1">
             <span className="text-[var(--text-icon)]">
               <PiMapPin className="size-4" />
             </span>
-            <span className="text-sm text-text-secondary">
-              San Francisco, CA
-            </span>
+            <span className="text-sm text-text-secondary">{location}</span>
           </li>
 
           <li className="flex items-center gap-1">
@@ -40,12 +55,12 @@ const JobCard = () => {
               <PiMoney className="size-4" />
             </span>
             <span className="text-sm text-text-secondary">
-              $120,000 - $180,000/year
+              ${minSalary} - ${maxSalary}/year
             </span>
           </li>
         </ul>
         <span className="flex w-fit items-center justify-center rounded-full bg-primary/10 px-4 py-1 text-sm text-primary">
-          Full Time
+          {type}
         </span>
       </div>
     </div>
