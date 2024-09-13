@@ -39,7 +39,40 @@
   }
 }
 
-/* Create animation */
+@keyframes bounce-reverse {
+  0% {
+    transform: translateX(0%);
+  }
+
+  50% {
+    transform: translateX(5%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@layer components {
+  /* Custom bullet style */
+  .custom-bullet {
+    width: 8px;
+    height: 8px;
+    background-color: #ddd;
+    border-radius: 99px;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+
+  /* Active bullet style */
+  .custom-bullet-active {
+    width: 40px;
+    background-color: black;
+  }
+}
+
+/* ANIMATIONS */
 
 @keyframes bounce {
   0% {
@@ -48,20 +81,6 @@
 
   50% {
     transform: translateX(-5%);
-  }
-
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-@keyframes bounce-reverse {
-  0% {
-    transform: translateX(0%);
-  }
-
-  50% {
-    transform: translateX(5%);
   }
 
   100% {
