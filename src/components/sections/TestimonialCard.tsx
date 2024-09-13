@@ -12,7 +12,7 @@ type TestimonialCardProps = {
 
 const TestimonialCard = ({ text, author }: TestimonialCardProps) => {
   return (
-    <div className="flex flex-col gap-5 rounded-xl bg-foreground p-5 shadow-sm">
+    <div className="flex flex-col gap-5 rounded-xl bg-foreground p-10 shadow-sm">
       <BiSolidQuoteLeft className="size-10 text-muted" />
 
       <p className="italic text-text-secondary">{text}</p>
@@ -21,7 +21,7 @@ const TestimonialCard = ({ text, author }: TestimonialCardProps) => {
         <UserAvatar />
         <ul>
           <li className="text-lg font-semibold">{author.name}</li>
-          <li className="text-text-secondary">{author.jobTitle}</li>
+          <li className="text-sm text-text-secondary">{author.jobTitle}</li>
         </ul>
       </div>
     </div>

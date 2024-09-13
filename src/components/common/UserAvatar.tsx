@@ -9,11 +9,11 @@ type UserAvatarProps = {
 };
 const UserAvatar = ({ avatarUrl, className }: UserAvatarProps) => {
   return (
-    <div className={cn("h-14 w-14 overflow-hidden rounded-full", className)}>
+    <div className={cn("h-12 w-12 overflow-hidden rounded-full", className)}>
       <Image
         src={avatarUrl ?? defaultAvatarImg}
-        width={56}
-        height={56}
+        width={48}
+        height={48}
         alt="avatar"
         className="h-full w-full object-cover"
       />
