@@ -22,6 +22,7 @@ const SearchBar = () => {
 
           <div className="relative flex flex-1 items-center justify-between">
             <SelectBox
+              variant="secondary"
               options={["CA, Los Angeles", "NY, New York", "CA, Los Angeles"]}
               defaultText="City or postcode"
               className="w-full p-0"

@@ -4,7 +4,7 @@ const Register = () => {
   return (
     <div>
       <h2 className="mb-5 text-xl font-bold tracking-tight md:text-2xl">
-        Sign Up
+        Create an account
       </h2>
       <AuthForm page="register" />
     </div>

@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { PiCaretDown } from "react-icons/pi";
 
 type SelectBoxProps = {
+  variant?: "primary" | "secondary";
+  label?: string;
   options: string[];
   defaultText?: string;
   value?: string;
@@ -12,7 +14,9 @@ type SelectBoxProps = {
 };
 
 const SelectBox = ({
+  variant = "primary",
   options,
+  label,
   value = "",
   onChange,
   className,
@@ -57,40 +61,47 @@ const SelectBox = ({
   }, [value]);
 
   return (
-    <div
-      ref={selectRef}
-      onClick={toggleSelectDropdown}
-      className={cn("relative cursor-pointer p-4", className)}
-    >
-      {/* SELECTED VALUE */}
-      <span className="text-text-secondary">
-        {selectedVal ? selectedVal : defaultText}
-      </span>
-      <button className="absolute right-0 top-1/2 -translate-y-1/2">
-        <PiCaretDown className="size-5 text-[var(--text-icon)]" />
-      </button>
-
-      {/* DROPDOWN */}
-      {isOpen && (
-        <ul
-          role="listbox"
-          onClick={(e) => e.stopPropagation()}
-          className={`absolute left-0 top-full w-full space-y-5 rounded-xl border border-[var(--border)] bg-foreground p-5 shadow-xl`}
-        >
-          {/* OPTIONS */}
-          {options.map((option) => (
-            <li
-              role="option"
-              aria-selected={selectedVal === option}
-              key={option}
-              className="cursor-pointer text-text-secondary"
-              onClick={() => handleSelect(option)}
-            >
-              {option}
-            </li>
-          ))}
-        </ul>
+    <div className={`${variant === "primary" && "space-y-2"} w-full`}>
+      {variant === "primary" && (
+        <label className="text-sm font-medium">{label}</label>
       )}
+      <div
+        ref={selectRef}
+        onClick={toggleSelectDropdown}
+        className={cn("relative cursor-pointer p-4", className)}
+      >
+        {/* SELECTED VALUE */}
+        <span className="text-text-secondary">
+          {selectedVal ? selectedVal : defaultText}
+        </span>
+        <button
+          className={`absolute top-1/2 -translate-y-1/2 ${variant === "primary" ? "right-3" : "right-0"}`}
+        >
+          <PiCaretDown className="size-5 text-[var(--text-icon)]" />
+        </button>
+
+        {/* DROPDOWN */}
+        {isOpen && (
+          <ul
+            role="listbox"
+            onClick={(e) => e.stopPropagation()}
+            className={`border-border absolute left-0 top-full z-40 w-full space-y-5 rounded-xl border bg-foreground p-5 shadow-xl`}
+          >
+            {/* OPTIONS */}
+            {options.map((option) => (
+              <li
+                role="option"
+                aria-selected={selectedVal === option}
+                key={option}
+                className="cursor-pointer text-text-secondary"
+                onClick={() => handleSelect(option)}
+              >
+                {option}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };
