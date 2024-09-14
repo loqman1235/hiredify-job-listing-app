@@ -14,7 +14,7 @@
   --text-light: 210 10% 51%;
   --text-icon: #696969;
   --text-muted: #e9ebed;
-  --border: #ecedf2;
+  --border: 230 19% 94%;
 
   /* BUTTONS */
   --primary-btn-bg: #3a81f7;
@@ -22,6 +22,9 @@
   --primary-btn-text: #fff;
   --secondary-btn-bg: #dfe7f7;
   --secondary-btn-text: #3a81f7;
+
+  --destructive-foreground: 0 71% 43%;
+  --destructive-background: 0 83% 95%;
 }
 
 @layer base {

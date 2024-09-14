@@ -10,7 +10,7 @@ const Hero = () => {
       <div className="relative mx-auto flex h-[calc(100vh-64px)] max-w-7xl items-center justify-between gap-5 px-5 md:px-10">
         {/* HEADING AND SEARCHBAR */}
         <div className="flex w-full flex-col gap-10 md:w-[60%]">
-          <h1 className="text-5xl font-bold tracking-tight md:text-6xl">
+          <h1 className="text-5xl font-extrabold tracking-tight md:text-6xl">
             Your Next <br />
             Career Move <br />
             <span className="text-primary">Awaits.</span>

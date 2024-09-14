@@ -1,6 +1,7 @@
 import Brand from "@/components/common/Brand";
 import Button from "@/components/common/Button";
 import NavLinks from "./NavLinks";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -12,8 +13,12 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="secondary">Login</Button>
-          <Button>Sign Up</Button>
+          <Button variant="secondary" asChild>
+            <Link href="/login">Login</Link>
+          </Button>
+          <Button asChild>
+            <Link href="/register">Sign Up</Link>
+          </Button>
         </div>
       </div>
     </div>

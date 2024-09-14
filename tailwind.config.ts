@@ -18,6 +18,11 @@ const config: Config = {
           primary: "hsl(var(--text))",
           secondary: "hsl(var(--text-light))",
         },
+        border: "hsl(var(--border))",
+        destructive: {
+          foreground: "hsl(var(--destructive-foreground))",
+          background: "hsl(var(--destructive-background))",
+        },
       },
     },
   },
