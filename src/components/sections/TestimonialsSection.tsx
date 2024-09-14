@@ -20,7 +20,6 @@ const TestimonialsSection = () => {
           spaceBetween={20}
           slidesPerView={2}
           autoplay={{ delay: 5000 }}
-          loop
           centeredSlides
           pagination={{
             clickable: true,

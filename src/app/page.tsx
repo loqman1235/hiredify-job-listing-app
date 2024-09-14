@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import { Hero } from "@/components/hero";
 import {
   CategoriesSection,
@@ -12,6 +13,7 @@ export default function Home() {
       <CategoriesSection />
       <FeaturedJobsSection />
       <TestimonialsSection />
+      <Footer />
     </main>
   );
 }

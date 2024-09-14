@@ -18,7 +18,7 @@ const TestimonialCard = ({ text, author }: TestimonialCardProps) => {
       <p className="italic text-text-secondary">{text}</p>
 
       <div className="flex items-center gap-5">
-        <UserAvatar />
+        <UserAvatar avatarUrl={author.avatar} />
         <ul>
           <li className="text-lg font-semibold">{author.name}</li>
           <li className="text-sm text-text-secondary">{author.jobTitle}</li>
