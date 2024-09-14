@@ -11,12 +11,14 @@ type SelectBoxProps = {
   value?: string;
   onChange?: (val: string) => void;
   className?: string;
+  isRequired?: boolean;
 };
 
 const SelectBox = ({
   variant = "primary",
   options,
   label,
+  isRequired,
   value = "",
   onChange,
   className,
@@ -63,7 +65,12 @@ const SelectBox = ({
   return (
     <div className={`${variant === "primary" && "space-y-2"} w-full`}>
       {variant === "primary" && (
-        <label className="text-sm font-medium">{label}</label>
+        <label className="text-sm font-medium">
+          {label}{" "}
+          {variant === "primary" && isRequired && (
+            <span className="text-destructive-foreground">*</span>
+          )}
+        </label>
       )}
       <div
         ref={selectRef}
@@ -75,6 +82,7 @@ const SelectBox = ({
           {selectedVal ? selectedVal : defaultText}
         </span>
         <button
+          type="button"
           className={`absolute top-1/2 -translate-y-1/2 ${variant === "primary" ? "right-3" : "right-0"}`}
         >
           <PiCaretDown className="size-5 text-[var(--text-icon)]" />

@@ -55,6 +55,7 @@ const AuthForm = ({ page }: AuthFormProps) => {
             className="border-border rounded-md border bg-background py-3"
             label="Account type"
             options={["Candidate", "Employer"]}
+            isRequired
           />
         </>
       )}
