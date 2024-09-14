@@ -15,11 +15,11 @@ const NavLinks = () => {
   const pathname = usePathname();
 
   return (
-    <ul className="flex items-center gap-7">
+    <ul className="hidden items-center gap-7 md:flex">
       {navLinks.map((link) => (
         <li
           key={link.text}
-          className={` ${pathname === link.href ? "text-primary" : "text-[var(--text)]"} hover:text-primary font-medium capitalize transition`}
+          className={` ${pathname === link.href ? "text-primary" : "text-[var(--text)]"} font-medium capitalize transition hover:text-primary`}
         >
           <Link href={link.href}>{link.text}</Link>
         </li>

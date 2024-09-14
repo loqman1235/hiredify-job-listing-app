@@ -35,7 +35,7 @@ const JobCard = ({
         >
           {title}
         </Link>
-        <ul className="flex items-center gap-5">
+        <ul className="flex flex-col items-start gap-3 md:flex-row md:items-center md:gap-5">
           <li className="flex items-center gap-1">
             <span className="text-[var(--text-icon)]">
               <PiBriefcase className="size-4" />
@@ -59,7 +59,7 @@ const JobCard = ({
             </span>
           </li>
         </ul>
-        <span className="flex w-fit items-center justify-center rounded-full bg-primary/10 px-4 py-1 text-sm text-primary">
+        <span className="mt-5 flex w-fit items-center justify-center rounded-full bg-primary/10 px-4 py-1 text-sm text-primary md:mt-0">
           {type}
         </span>
       </div>

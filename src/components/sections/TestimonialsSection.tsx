@@ -13,7 +13,7 @@ const TestimonialsSection = () => {
     <Section
       title="Testimonials"
       description="What clients say about us"
-      className="px-0"
+      className="px-5 md:px-0"
     >
       <div className="w-full">
         <Swiper
@@ -28,6 +28,17 @@ const TestimonialsSection = () => {
             bulletActiveClass: "custom-bullet-active",
           }}
           modules={[Autoplay, Pagination]}
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+            },
+            640: {
+              slidesPerView: 2,
+            },
+            1024: {
+              slidesPerView: 2,
+            },
+          }}
           className="w-full"
         >
           {testimonials.map((testimonial, i) => (

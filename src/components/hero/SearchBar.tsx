@@ -4,9 +4,9 @@ import SelectBox from "../common/SelectBox";
 
 const SearchBar = () => {
   return (
-    <form className="flex h-[100px] w-full items-center gap-10 rounded-lg bg-foreground p-5 shadow-sm">
+    <form className="flex h-[100px] w-full items-center gap-5 rounded-lg bg-foreground p-5 shadow-sm md:gap-10">
       <div className="flex h-full flex-1 items-center gap-4">
-        <div className="flex h-full items-center gap-4 border-r border-r-[var(--border)]">
+        <div className="flex h-full items-center gap-4 border-none border-r-[var(--border)] md:border-r">
           <PiMagnifyingGlass className="size-6 text-[var(--text-icon)]" />
           <input
             type="text"
@@ -17,7 +17,7 @@ const SearchBar = () => {
           />
         </div>
 
-        <div className="flex w-[50%] items-center gap-4">
+        <div className="hidden w-[50%] items-center gap-4 md:flex">
           <PiMapPin className="size-6 text-[var(--text-icon)]" />
 
           <div className="relative flex flex-1 items-center justify-between">

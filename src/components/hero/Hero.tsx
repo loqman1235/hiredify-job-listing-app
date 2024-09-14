@@ -7,10 +7,10 @@ const Hero = () => {
     <div className="h-screen w-full bg-gradient-to-br from-[var(--gradient-blue-1)] from-0% via-[var(--gradient-blue-2)] via-[24%] to-[var(--gradient-blue-1)] to-100%">
       <Navbar />
 
-      <div className="relative mx-auto flex h-[calc(100vh-64px)] max-w-7xl items-center justify-between gap-5 px-10">
+      <div className="relative mx-auto flex h-[calc(100vh-64px)] max-w-7xl items-center justify-between gap-5 px-5 md:px-10">
         {/* HEADING AND SEARCHBAR */}
-        <div className="flex w-[60%] flex-col gap-10">
-          <h1 className="text-6xl font-bold tracking-tight">
+        <div className="flex w-full flex-col gap-10 md:w-[60%]">
+          <h1 className="text-5xl font-bold tracking-tight md:text-6xl">
             Your Next <br />
             Career Move <br />
             <span className="text-primary">Awaits.</span>
