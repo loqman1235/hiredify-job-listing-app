@@ -105,17 +105,17 @@ const Footer = () => {
         <p className="text-sm">© 2024 Hiredify. All Right Reserved.</p>
         <ul className="flex items-center gap-5">
           <li>
-            <a href="#">
+            <a href="#" className="transition hover:text-primary">
               <PiFacebookLogo className="size-5" />
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="#" className="transition hover:text-primary">
               <PiXLogo className="size-5" />
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="#" className="transition hover:text-primary">
               <PiInstagramLogo className="size-5" />
             </a>
           </li>
