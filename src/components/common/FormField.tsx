@@ -34,7 +34,7 @@ const FormField = ({
           {...props}
           id={props.id}
           className={cn(
-            "w-full rounded-md border border-border bg-transparent p-3 outline-none",
+            "w-full rounded-md border border-border bg-transparent p-3 outline-none focus:border-primary",
             className,
           )}
           type={type === "password" && !isPassHidden ? "text" : type}
@@ -42,6 +42,7 @@ const FormField = ({
 
         {type === "password" && (
           <button
+            type="button"
             onClick={() => setIsPassHidden((prev) => !prev)}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary transition hover:text-text-primary"
           >
