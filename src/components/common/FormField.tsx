@@ -23,7 +23,7 @@ const FormField = ({
   return (
     <div className="space-y-1">
       <label
-        className="flex items-center gap-1 text-base font-medium tracking-[-0.18px]"
+        className="flex items-center gap-1 text-sm font-medium"
         htmlFor={props.id}
       >
         {label}{" "}

@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --gradient-blue-1: #e3ebf8;
+  --gradient-blue-1: #e8ebfc;
   --gradient-blue-2: #f1f4fb;
-  --primary: 217 92% 60%;
+  --primary: 235 86% 65%;
   --background: 223 54% 97%;
   --foreground: 0 0% 100%;
-  --footer: 216 59% 93%;
+  --footer: 231 76% 95%;
   --muted: 210 10% 95%;
   --text: 217 92% 14%; /*#202124*/
   --text-light: 210 10% 51%;
@@ -18,7 +18,7 @@
 
   /* BUTTONS */
   --primary-btn-bg: #3a81f7;
-  --primary-btn-bg-hover: #1967d2;
+  --primary-btn-bg-hover: #4250f0;
   --primary-btn-text: #fff;
   --secondary-btn-bg: #dfe7f7;
   --secondary-btn-text: #3a81f7;

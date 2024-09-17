@@ -17,9 +17,9 @@ const Button = ({
 }: ButtonProps) => {
   const variants = {
     primary:
-      "bg-[var(--primary-btn-bg)] text-[var(--primary-btn-text)] hover:bg-[var(--primary-btn-bg-hover)]",
+      "bg-primary text-[var(--primary-btn-text)] hover:bg-[var(--primary-btn-bg-hover)]",
     secondary:
-      "bg-[var(--secondary-btn-bg)] text-[var(--secondary-btn-text)] hover:bg-[var(--primary-btn-bg)] hover:text-[var(--primary-btn-text)]",
+      "bg-primary/10 text-primary hover:bg-primary hover:text-[var(--primary-btn-text)]",
   };
 
   const Comp = asChild ? Slot : "button";
