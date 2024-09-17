@@ -7,7 +7,7 @@ const Register = () => {
       {/* HEADER */}
       <div className="space-y-1">
         <h2 className="text-xl font-bold tracking-[-0.47px] md:text-2xl">
-          Let&#39;s Get Started
+          Let&#39;s get you started
         </h2>
         <p className="text-text-secondary">
           Sign Up and get access to Hiredify
