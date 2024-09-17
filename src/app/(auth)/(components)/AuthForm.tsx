@@ -1,12 +1,16 @@
+"use client";
 import Button from "@/components/common/Button";
 import FormField from "@/components/common/FormField";
 import AccountTypeSwitch from "./AccountTypeSwitch";
+import { useState } from "react";
 
 type AuthFormProps = {
   page: "login" | "register";
 };
 
 const AuthForm = ({ page }: AuthFormProps) => {
+  const [isEmployer, setIsEmployer] = useState(false);
+
   return (
     <form className="flex flex-col gap-5">
       {page === "login" ? (
@@ -29,7 +33,10 @@ const AuthForm = ({ page }: AuthFormProps) => {
       ) : (
         <>
           {/* Account Type */}
-          <AccountTypeSwitch />
+          <AccountTypeSwitch
+            setIsEmployer={setIsEmployer}
+            isEmployer={isEmployer}
+          />
           <FormField
             id="username"
             label="Username"

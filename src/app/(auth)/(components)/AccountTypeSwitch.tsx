@@ -1,10 +1,14 @@
 "use client";
 
-import { useState } from "react";
+type AccountTypeSwitchProps = {
+  isEmployer: boolean;
+  setIsEmployer: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const AccountTypeSwitch = () => {
-  const [isEmployer, setIsEmployer] = useState(false);
-
+const AccountTypeSwitch = ({
+  setIsEmployer,
+  isEmployer,
+}: AccountTypeSwitchProps) => {
   return (
     <div className="relative flex h-[55px] w-full rounded-md bg-background p-[6px]">
       <div className="relative flex h-full w-full items-center">
