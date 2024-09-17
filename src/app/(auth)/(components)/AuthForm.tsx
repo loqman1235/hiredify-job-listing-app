@@ -1,6 +1,6 @@
 import Button from "@/components/common/Button";
 import FormField from "@/components/common/FormField";
-import SelectBox from "@/components/common/SelectBox";
+import AccountTypeSwitch from "./AccountTypeSwitch";
 
 type AuthFormProps = {
   page: "login" | "register";
@@ -28,7 +28,8 @@ const AuthForm = ({ page }: AuthFormProps) => {
         </>
       ) : (
         <>
-          <div></div>
+          {/* Account Type */}
+          <AccountTypeSwitch />
           <FormField
             id="username"
             label="Username"
@@ -47,14 +48,6 @@ const AuthForm = ({ page }: AuthFormProps) => {
             type="password"
             label="Password"
             placeholder="Enter your password"
-            isRequired
-          />
-
-          <SelectBox
-            variant="primary"
-            className="border-border rounded-md border bg-background py-3"
-            label="Account type"
-            options={["Candidate", "Employer"]}
             isRequired
           />
         </>

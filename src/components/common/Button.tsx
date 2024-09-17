@@ -26,7 +26,7 @@ const Button = ({
 
   return (
     <Comp
-      className={`rounded-lg px-6 py-2 font-medium transition ${cn(variants[variant], className)}`}
+      className={`rounded-lg px-6 py-3 font-medium transition ${cn(variants[variant], className)}`}
       {...props}
     >
       {children}

@@ -21,9 +21,9 @@ const FormField = ({
   const [isPassHidden, setIsPassHidden] = useState(true);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1">
       <label
-        className="flex items-center gap-1 text-sm font-medium"
+        className="flex items-center gap-1 text-base font-medium tracking-[-0.18px]"
         htmlFor={props.id}
       >
         {label}{" "}
@@ -34,7 +34,7 @@ const FormField = ({
           {...props}
           id={props.id}
           className={cn(
-            "border-border w-full rounded-md border bg-background p-3 outline-none",
+            "w-full rounded-md border border-border bg-transparent p-3 outline-none",
             className,
           )}
           type={type === "password" && !isPassHidden ? "text" : type}
