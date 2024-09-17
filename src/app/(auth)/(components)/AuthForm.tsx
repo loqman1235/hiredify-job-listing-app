@@ -8,7 +8,7 @@ type AuthFormProps = {
 
 const AuthForm = ({ page }: AuthFormProps) => {
   return (
-    <div className="flex flex-col gap-5">
+    <form className="flex flex-col gap-5">
       {page === "login" ? (
         <>
           <FormField
@@ -55,7 +55,7 @@ const AuthForm = ({ page }: AuthFormProps) => {
       <Button type="submit" className="py-3">
         {page === "login" ? "Login" : "Sign Up"}
       </Button>
-    </div>
+    </form>
   );
 };
 
