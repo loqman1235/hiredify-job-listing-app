@@ -13,6 +13,7 @@ const AccountTypeSwitch = () => {
         ></div>
 
         <button
+          type="button"
           onClick={() => setIsEmployer(false)}
           className={`z-10 flex flex-1 items-center justify-center font-medium transition-colors duration-300 ${
             isEmployer ? "text-text-secondary" : "text-text-primary"
@@ -21,6 +22,7 @@ const AccountTypeSwitch = () => {
           Candidate
         </button>
         <button
+          type="button"
           onClick={() => setIsEmployer(true)}
           className={`z-10 flex flex-1 items-center justify-center font-medium transition-colors duration-300 ${
             isEmployer ? "text-text-primary" : "text-text-secondary"
