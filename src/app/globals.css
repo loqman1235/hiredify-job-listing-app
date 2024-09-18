@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --gradient-blue-1: #e8ebfc;
+  --gradient-blue-1: #e4ecf8;
   --gradient-blue-2: #f1f4fb;
-  --primary: 235 86% 65%;
+  --primary: 217 92% 60%;
   --background: 223 54% 97%;
   --foreground: 0 0% 100%;
   --footer: 231 76% 95%;
@@ -18,7 +18,7 @@
 
   /* BUTTONS */
   --primary-btn-bg: #3a81f7;
-  --primary-btn-bg-hover: #4250f0;
+  --primary-btn-bg-hover: #2272f6;
   --primary-btn-text: #fff;
   --secondary-btn-bg: #dfe7f7;
   --secondary-btn-text: #3a81f7;
