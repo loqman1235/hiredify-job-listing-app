@@ -25,6 +25,10 @@
 
   --destructive-foreground: 0 71% 43%;
   --destructive-background: 0 83% 95%;
+
+  /* Sizes */
+  --navbar-height: 64px;
+  --dashboard-sidebar-width: 280px;
 }
 
 @layer base {
@@ -72,7 +76,7 @@
   /* Active bullet style */
   .custom-bullet-active {
     width: 40px;
-    background-color: black;
+    background-color: hsl(var(--primary));
   }
 }
 

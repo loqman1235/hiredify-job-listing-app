@@ -15,7 +15,7 @@ const NavLinks = () => {
   const pathname = usePathname();
 
   return (
-    <ul className="hidden items-center gap-7 md:flex">
+    <ul className="hidden items-center gap-6 md:flex">
       {navLinks.map((link) => (
         <li
           key={link.text}
