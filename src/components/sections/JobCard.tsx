@@ -22,7 +22,7 @@ const JobCard = ({
   type,
 }: JobCardProps) => {
   return (
-    <div className="flex items-center gap-5 rounded-xl bg-foreground p-5 shadow-sm">
+    <div className="flex items-center gap-5 rounded-xl border border-border bg-foreground p-5 shadow-sm">
       {/* LOGO */}
       <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-md bg-muted p-1">
         <Image src={image} alt={title} width={50} height={50} />

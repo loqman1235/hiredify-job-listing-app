@@ -9,7 +9,7 @@ const Brand = ({ className }: BrandProps) => {
   return (
     <Link
       href="/"
-      className={cn("text-2xl font-bold tracking-tight", className)}
+      className={cn("text-2xl font-bold tracking-tighter", className)}
     >
       <span className="text-primary">H</span>iredify.
     </Link>

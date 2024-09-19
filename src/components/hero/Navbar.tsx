@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`relative z-40 h-[var(--navbar-height)] w-full ${pathname.startsWith("/dashboard") && "bg-foreground shadow-sm"}`}
+      className={`relative z-40 h-[var(--navbar-height)] w-full ${pathname.startsWith("/dashboard") && "sticky top-0 bg-foreground shadow-sm"}`}
     >
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-5">
         <div className="flex items-center gap-10">

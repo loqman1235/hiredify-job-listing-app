@@ -29,6 +29,16 @@
   /* Sizes */
   --navbar-height: 64px;
   --dashboard-sidebar-width: 280px;
+
+  /* DASHBOARD STATS CARDS */
+  --bg-card-1: hsl(217 92% 95%);
+  --text-card-1: hsl(217 92% 60%);
+  --bg-card-2: hsl(136, 53%, 95%);
+  --text-card-2: hsl(136, 53%, 43%);
+  --bg-card-3: hsl(41 100% 95%);
+  --text-card-3: hsl(41 100% 49%);
+  --bg-card-4: hsl(4 71% 95%);
+  --text-card-4: hsl(4 71% 50%);
 }
 
 @layer base {

@@ -13,7 +13,9 @@ const layout = ({ children }: { children: React.ReactNode }) => {
       <Navbar />
       <div className="flex">
         <Sidebar />
-        <div className="p-5">{children}</div>
+        <div className="w-full p-5 md:w-[calc(100%-var(--dashboard-sidebar-width))]">
+          {children}
+        </div>
       </div>
     </main>
   );
