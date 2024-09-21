@@ -39,6 +39,16 @@
   --text-card-3: hsl(41 100% 49%);
   --bg-card-4: hsl(4 71% 95%);
   --text-card-4: hsl(4 71% 50%);
+
+  --chart-bg: #3b83f7;
+  --chart-border: #3a81f7;
+
+  --doughnut-chart-applied-bg: #3a81f7;
+  --doughnut-chart-applied-border: #3a81f7;
+  --doughnut-chart-rejected-bg: #f44336;
+  --doughnut-chart-rejected-border: #f44336;
+  --doughnut-chart-hired-bg: #4caf50;
+  --doughnut-chart-hired-border: #4caf50;
 }
 
 @layer base {

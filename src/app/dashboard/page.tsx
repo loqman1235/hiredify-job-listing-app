@@ -7,6 +7,8 @@ import {
 import StatCard from "./(components)/StatCard";
 import JobCard from "@/components/sections/JobCard";
 import netflixLogoImg from "@/assets/images/logos/netflix.svg";
+import ProfileViewsChart from "./(components)/ProfileViewsChart";
+import ApplicationProgressChart from "./(components)/ApplicationProgressChart";
 
 const statsCards = [
   {
@@ -56,6 +58,10 @@ const Dashboard = () => {
         ))}
       </div>
 
+      <div className="flex w-full flex-col gap-5 md:flex-row">
+        <ProfileViewsChart />
+        <ApplicationProgressChart />
+      </div>
       {/* RECENTLY APPLIED JOBS */}
       <div className="w-full rounded-xl bg-foreground p-5 shadow">
         <h3 className="mb-5 text-lg font-semibold tracking-tight">

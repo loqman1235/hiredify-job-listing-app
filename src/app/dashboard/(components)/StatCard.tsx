@@ -30,7 +30,7 @@ const StatCard = ({ Icon, text, count, bgColor, textColor }: StatCardProps) => {
         >
           {count}
         </li>
-        <li className="capitalize text-text-primary">{text}</li>
+        <li className="capitalize text-text-secondary">{text}</li>
       </ul>
     </div>
   );
