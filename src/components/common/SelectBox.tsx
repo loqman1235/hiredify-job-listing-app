@@ -63,7 +63,7 @@ const SelectBox = ({
   }, [value]);
 
   return (
-    <div className={`${variant === "primary" && "space-y-2"} w-full`}>
+    <div className={`w-full`}>
       {variant === "primary" && (
         <label className="text-sm font-medium">
           {label}{" "}
@@ -75,10 +75,15 @@ const SelectBox = ({
       <div
         ref={selectRef}
         onClick={toggleSelectDropdown}
-        className={cn("relative cursor-pointer p-4", className)}
+        className={cn(
+          `relative cursor-pointer p-3 ${variant === "primary" && "rounded-md border border-border"}`,
+          className,
+        )}
       >
         {/* SELECTED VALUE */}
-        <span className="text-text-secondary">
+        <span
+          className={`text-text-secondary ${selectedVal && "!text-text-primary"}`}
+        >
           {selectedVal ? selectedVal : defaultText}
         </span>
         <button
@@ -93,7 +98,7 @@ const SelectBox = ({
           <ul
             role="listbox"
             onClick={(e) => e.stopPropagation()}
-            className={`border-border absolute left-0 top-full z-40 w-full space-y-5 rounded-xl border bg-foreground p-5 shadow-xl`}
+            className={`absolute left-0 top-full z-40 w-full space-y-5 rounded-xl border border-border bg-foreground p-5 shadow-xl`}
           >
             {/* OPTIONS */}
             {options.map((option) => (

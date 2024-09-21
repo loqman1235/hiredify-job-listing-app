@@ -5,7 +5,7 @@ import { useState } from "react";
 import { PiEye, PiEyeSlash } from "react-icons/pi";
 
 type InputProps = {
-  type?: "email" | "password" | "text" | "number" | "tel";
+  type?: "email" | "password" | "text" | "number" | "tel" | "date";
   label: string;
   className?: string;
   isRequired?: boolean;
@@ -21,9 +21,9 @@ const FormField = ({
   const [isPassHidden, setIsPassHidden] = useState(true);
 
   return (
-    <div className="space-y-1">
+    <div className="w-full space-y-1">
       <label
-        className="flex items-center gap-1 text-sm font-medium"
+        className="flex items-center gap-1 text-sm font-medium capitalize"
         htmlFor={props.id}
       >
         {label}{" "}
