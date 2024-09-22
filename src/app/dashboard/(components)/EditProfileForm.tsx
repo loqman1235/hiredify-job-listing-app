@@ -11,15 +11,15 @@ const EditProfileForm = () => {
       {/* PROFILE PICTURE */}
       <div className="relative h-40 w-40 overflow-hidden rounded-md bg-muted">
         <Image
-          src="https://randomuser.me/api/portraits/women/1.jpg"
+          src="https://randomuser.me/api/portraits/men/1.jpg"
           alt="profile picture"
           fill
-          className="relative"
+          className="relative h-full w-full bg-cover"
         />
 
         <label
           htmlFor="profileImg"
-          className="absolute right-2 top-2 flex cursor-pointer items-center justify-center rounded-full bg-black/50 p-1 text-white"
+          className="absolute right-2 top-2 flex cursor-pointer items-center justify-center rounded-full bg-muted p-1 text-primary shadow"
         >
           <input id="profileImg" type="file" className="hidden" />
           <PiCamera className="size-5" />

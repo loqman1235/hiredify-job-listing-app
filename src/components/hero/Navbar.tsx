@@ -36,11 +36,11 @@ const Navbar = () => {
         ) : (
           <div className="flex items-center gap-5">
             <button className="relative">
-              <PiChatCircleDots className="size-6" />
+              <PiChatCircleDots className="size-6 text-[var(--text-icon)] transition hover:text-text-primary" />
               <span className="absolute right-0 top-0 rounded-full border border-background bg-primary p-1 text-xs"></span>
             </button>
             <button className="relative">
-              <PiBell className="size-6" />
+              <PiBell className="size-6 text-[var(--text-icon)] transition hover:text-text-primary" />
               <span className="absolute right-0 top-0 rounded-full border border-background bg-primary p-1 text-xs"></span>
             </button>
             <UserAvatar
