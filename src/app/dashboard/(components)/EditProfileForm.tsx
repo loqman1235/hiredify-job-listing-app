@@ -89,6 +89,22 @@ const EditProfileForm = () => {
         />
       </div>
 
+      <div className="flex w-full flex-col items-center gap-5 md:flex-row">
+        <FormField
+          className="flex-1"
+          label="Salary"
+          id="salary"
+          placeholder="Enter your salary"
+        />
+
+        <SelectBox
+          options={["Hourly", "Daily", "Weekly", "Monthly", "Yearly"]}
+          label="Salary Type"
+          variant="primary"
+          defaultText="Select your salary type"
+        />
+      </div>
+
       <div className="flex w-full flex-col gap-5">
         <FormField
           label="Job title"
