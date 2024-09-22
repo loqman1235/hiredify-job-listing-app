@@ -13,7 +13,6 @@ import {
   Heading,
   Image,
   Link,
-  MediaEmbed,
   BlockQuote,
   Strikethrough,
   List,
@@ -21,9 +20,17 @@ import {
 
 import "ckeditor5/ckeditor5.css";
 
-const TextEditor = () => {
+type TextEditorProps = {
+  label: string;
+  placeholder?: string;
+};
+
+const TextEditor = ({ label, placeholder }: TextEditorProps) => {
   return (
-    <div className="min-h-[300px] w-full">
+    <div className="space-y-1">
+      <label className="flex items-center gap-1 text-sm font-medium capitalize">
+        {label}
+      </label>
       <CKEditor
         editor={ClassicEditor}
         config={{
@@ -42,7 +49,6 @@ const TextEditor = () => {
               "numberedList",
               "blockQuote",
               "imageUpload",
-              "mediaEmbed",
               "code",
               "horizontalLine",
               "removeFormat",
@@ -58,13 +64,12 @@ const TextEditor = () => {
             Heading,
             Image,
             Link,
-            MediaEmbed,
             BlockQuote,
             Strikethrough,
             List,
           ],
 
-          initialData: "<p>Hello from CKEditor 5 in React!</p>",
+          placeholder,
         }}
       />
     </div>
