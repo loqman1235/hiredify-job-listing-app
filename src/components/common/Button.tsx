@@ -2,7 +2,7 @@ import { cn } from "@/libs/utils";
 import { Slot } from "@radix-ui/react-slot";
 
 type ButtonProps = {
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "destructive";
   className?: string;
   children: React.ReactNode;
   asChild?: boolean;
@@ -19,14 +19,16 @@ const Button = ({
     primary:
       "bg-primary text-[var(--primary-btn-text)] hover:bg-[var(--primary-btn-bg-hover)]",
     secondary:
-      "bg-primary/10 text-primary hover:bg-primary hover:text-[var(--primary-btn-text)]",
+      "bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary",
+    destructive:
+      "text-destructive bg-destructive/10 hover:bg-destructive/20 hover:text-destructive",
   };
 
   const Comp = asChild ? Slot : "button";
 
   return (
     <Comp
-      className={`rounded-lg px-6 py-3 font-medium transition ${cn(variants[variant], className)}`}
+      className={`rounded-lg px-6 py-3 font-medium capitalize transition ${cn(variants[variant], className)}`}
       {...props}
     >
       {children}

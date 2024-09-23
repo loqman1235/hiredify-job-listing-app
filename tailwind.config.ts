@@ -19,10 +19,7 @@ const config: Config = {
           secondary: "hsl(var(--text-light))",
         },
         border: "hsl(var(--border))",
-        destructive: {
-          foreground: "hsl(var(--destructive-foreground))",
-          background: "hsl(var(--destructive-background))",
-        },
+        destructive: "hsl(var(--destructive-foreground))",
         success: "hsl(var(--success-color))",
         warning: "hsl(var(--warning))",
         danger: "hsl(var(--danger))",

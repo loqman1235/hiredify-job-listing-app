@@ -26,8 +26,7 @@ const FormField = ({
         className="flex items-center gap-1 text-sm font-medium capitalize"
         htmlFor={props.id}
       >
-        {label}{" "}
-        {isRequired && <span className="text-destructive-foreground">*</span>}
+        {label} {isRequired && <span className="text-destructive">*</span>}
       </label>
       <div className="relative">
         <input

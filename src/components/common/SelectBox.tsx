@@ -90,7 +90,9 @@ const SelectBox = ({
           type="button"
           className={`absolute top-1/2 -translate-y-1/2 ${variant === "primary" ? "right-3" : "right-0"}`}
         >
-          <PiCaretDown className="size-5 text-[var(--text-icon)]" />
+          <PiCaretDown
+            className={`size-5 text-[var(--text-icon)] transition ${isOpen && "rotate-180"}`}
+          />
         </button>
 
         {/* DROPDOWN */}
@@ -106,7 +108,7 @@ const SelectBox = ({
                 role="option"
                 aria-selected={selectedVal === option}
                 key={option}
-                className="cursor-pointer text-text-secondary"
+                className="cursor-pointer text-text-secondary transition hover:text-text-primary"
                 onClick={() => handleSelect(option)}
               >
                 {option}
