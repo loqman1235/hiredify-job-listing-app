@@ -92,7 +92,7 @@ const EditProfileForm = () => {
       <div className="flex w-full flex-col items-center gap-5 md:flex-row">
         <FormField
           className="flex-1"
-          label="Salary"
+          label="Salary ($)"
           id="salary"
           placeholder="Enter your salary"
         />

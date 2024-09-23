@@ -26,6 +26,7 @@ const config: Config = {
         success: "hsl(var(--success-color))",
         warning: "hsl(var(--warning))",
         danger: "hsl(var(--danger))",
+        "input-placeholder": "hsl(var(--input-placeholder))",
       },
     },
   },
