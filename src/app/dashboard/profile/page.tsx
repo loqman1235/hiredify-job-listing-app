@@ -1,6 +1,6 @@
 import EditProfileForm from "../(components)/EditProfileForm";
 
-const profile = () => {
+const Profile = () => {
   return (
     <div>
       <h3 className="mb-5 text-2xl font-bold tracking-tight">Edit Profile</h3>
@@ -9,5 +9,4 @@ const profile = () => {
     </div>
   );
 };
-
-export default profile;
+export default Profile;

@@ -7,6 +7,7 @@ import TextEditor from "./TextEditor";
 import Image from "next/image";
 import { PiCamera, PiCaretDown, PiX } from "react-icons/pi";
 import { useState } from "react";
+import Card from "@/components/common/Card";
 
 const EditProfileForm = () => {
   const [socialNetworks, setSocialNetworks] = useState<string[]>([
@@ -46,8 +47,7 @@ const EditProfileForm = () => {
   };
   return (
     <form className="space-y-5">
-      <div className="mt-5 w-full space-y-5 rounded-lg bg-foreground p-5 shadow">
-        <h4 className="text-lg font-semibold tracking-tight">My Profile</h4>
+      <Card title="My Profile">
         {/* PROFILE PICTURE */}
         <div className="relative h-[280px] w-full overflow-hidden rounded-md bg-muted md:h-40 md:w-40">
           <Image
@@ -153,13 +153,9 @@ const EditProfileForm = () => {
           />
           <TextEditor label="Bio" />
         </div>
-      </div>
+      </Card>
 
-      <div className="mt-5 w-full space-y-5 rounded-lg bg-foreground p-5 shadow">
-        <h4 className="text-lg font-semibold tracking-tight">
-          Social Networks
-        </h4>
-
+      <Card title="Social Networks">
         {socialNetworks.map((socialNetwork, index) => (
           // Social dropdown
           <div key={index} className="space-y-3">
@@ -210,7 +206,7 @@ const EditProfileForm = () => {
         >
           Add another network
         </Button>
-      </div>
+      </Card>
 
       <Button type="submit">Save</Button>
     </form>

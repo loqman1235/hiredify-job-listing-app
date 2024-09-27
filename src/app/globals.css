@@ -118,8 +118,8 @@
   }
 }
 
-.ck.ck-sticky-panel__content {
-  border-radius: 8px 8px 0 0;
+.ck.ck-sticky-panel {
+  border-radius: 8px 8px 0 0 !important;
 }
 
 .ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-blurred {
