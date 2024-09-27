@@ -117,3 +117,15 @@
     transform: translateX(0%);
   }
 }
+
+.ck.ck-sticky-panel__content {
+  border-radius: 8px 8px 0 0;
+}
+
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-blurred {
+  border-radius: 0 0 8px 8px !important;
+}
+
+.ck-focused {
+  border-radius: 0 0 8px 8px !important;
+}
