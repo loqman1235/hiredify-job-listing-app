@@ -211,9 +211,9 @@ const EditProfileForm = () => {
       <Card title="My Resume">
         <label
           htmlFor="resume"
-          className="inline-flex cursor-pointer items-center gap-2 rounded-lg bg-primary/10 px-6 py-3 font-medium capitalize text-primary transition hover:bg-primary/20 hover:text-primary"
+          className="inline-flex cursor-pointer items-center gap-2 rounded-lg bg-primary/10 px-6 py-3 text-sm font-medium capitalize text-primary transition hover:bg-primary/20 hover:text-primary"
         >
-          <PiUploadSimple className="size-5" /> <span>Upload</span>
+          <PiUploadSimple className="size-4" /> <span>Upload</span>
           <input type="file" name="resume" id="resume" className="hidden" />
         </label>
 

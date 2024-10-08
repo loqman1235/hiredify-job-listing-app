@@ -1,5 +1,5 @@
 type CardProps = {
-  title: string;
+  title?: string;
   children: React.ReactNode;
 };
 
