@@ -65,7 +65,7 @@ const SelectBox = ({
   return (
     <div className={`w-full`}>
       {variant === "primary" && (
-        <label className="text-sm font-medium">
+        <label onClick={toggleSelectDropdown} className="text-sm font-medium">
           {label}{" "}
           {variant === "primary" && isRequired && (
             <span className="text-destructive-foreground">*</span>
@@ -74,11 +74,11 @@ const SelectBox = ({
       )}
       <div
         ref={selectRef}
-        onClick={toggleSelectDropdown}
         className={cn(
           `relative cursor-pointer p-3 ${variant === "primary" && "rounded-md border border-border"}`,
           className,
         )}
+        onClick={toggleSelectDropdown}
       >
         {/* SELECTED VALUE */}
         <span

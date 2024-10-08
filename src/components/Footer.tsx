@@ -12,17 +12,17 @@ const Footer = () => {
   return (
     <div className="w-full bg-footer px-5">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-5 border-b border-b-muted py-10 md:grid-cols-4">
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col items-center gap-5 md:items-start">
           <Brand className="text-xl" />
-          <p className="text-sm text-text-secondary">
+          <p className="text-center text-sm text-text-secondary md:text-left">
             Empowering Your Career Journey with Opportunities That Match Your
             Skills and Ambitions
           </p>
         </div>
 
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col items-center gap-5 md:items-start">
           <h3 className="text-lg font-bold">Explore</h3>
-          <ul className="flex flex-col gap-3 text-sm text-text-secondary">
+          <ul className="flex flex-col gap-3 text-center text-sm text-text-secondary md:text-left">
             <li>
               <Link className="hover:underline" href="/">
                 Find Jobs
@@ -51,9 +51,9 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col items-center gap-5 md:items-start">
           <h3 className="text-lg font-bold">Resources</h3>
-          <ul className="flex flex-col gap-3 text-sm text-text-secondary">
+          <ul className="flex flex-col gap-3 text-center text-sm text-text-secondary md:text-left">
             <li>
               <Link className="hover:underline" href="/">
                 Help Center
@@ -82,16 +82,16 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col items-center gap-5 md:items-start">
           <h3 className="text-lg font-bold">Contact</h3>
-          <ul className="flex flex-col gap-3 text-sm text-text-secondary">
-            <li className="flex items-center gap-2">
+          <ul className="flex flex-col items-center gap-3 text-center text-sm text-text-secondary md:items-start md:text-left">
+            <li className="flex items-center gap-2 text-center md:text-left">
               <span>
                 <PiAt className="size-4" />
               </span>
               <span>contact@hiredify.com</span>
             </li>
-            <li className="flex items-center gap-2">
+            <li className="flex items-center gap-2 text-center">
               <span>
                 <PiPhone className="size-4" />
               </span>
