@@ -6,7 +6,6 @@ import {
   PiBookmarkSimple,
   PiChatCircleDots,
   PiGauge,
-  PiIdentificationCard,
   PiMegaphone,
   PiUser,
 } from "react-icons/pi";
@@ -14,7 +13,7 @@ import {
 const sidebarNav = [
   { icon: PiGauge, text: "dashboard", href: "/dashboard" },
   { icon: PiUser, text: "profile", href: "/dashboard/profile" },
-  { icon: PiIdentificationCard, text: "my resume", href: "/dashboard/resume" },
+
   { icon: PiMegaphone, text: "my applied", href: "/dashboard/applied" },
   {
     icon: PiBookmarkSimple,

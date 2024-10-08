@@ -5,7 +5,7 @@ import FormField from "@/components/common/FormField";
 import SelectBox from "@/components/common/SelectBox";
 import TextEditor from "./TextEditor";
 import Image from "next/image";
-import { PiCamera, PiCaretDown, PiX } from "react-icons/pi";
+import { PiCamera, PiCaretDown, PiUploadSimple, PiX } from "react-icons/pi";
 import { useState } from "react";
 import Card from "@/components/common/Card";
 
@@ -206,6 +206,20 @@ const EditProfileForm = () => {
         >
           Add another network
         </Button>
+      </Card>
+
+      <Card title="My Resume">
+        <label
+          htmlFor="resume"
+          className="inline-flex cursor-pointer items-center gap-2 rounded-lg bg-primary/10 px-6 py-3 font-medium capitalize text-primary transition hover:bg-primary/20 hover:text-primary"
+        >
+          <PiUploadSimple className="size-5" /> <span>Upload</span>
+          <input type="file" name="resume" id="resume" className="hidden" />
+        </label>
+
+        <p className="text-sm text-text-secondary">
+          Upload file. pdf, doc, docs
+        </p>
       </Card>
 
       <Button type="submit">Save</Button>
