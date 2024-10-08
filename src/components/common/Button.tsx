@@ -28,7 +28,10 @@ const Button = ({
 
   return (
     <Comp
-      className={`rounded-lg px-6 py-3 font-medium capitalize transition ${cn(variants[variant], className)}`}
+      className={cn(
+        `rounded-lg px-6 py-3 font-medium capitalize transition ${variants[variant]}`,
+        className,
+      )}
       {...props}
     >
       {children}

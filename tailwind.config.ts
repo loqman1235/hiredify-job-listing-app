@@ -20,7 +20,7 @@ const config: Config = {
         },
         border: "hsl(var(--border))",
         destructive: "hsl(var(--destructive-foreground))",
-        success: "hsl(var(--success-color))",
+        success: "hsl(var(--success))",
         warning: "hsl(var(--warning))",
         danger: "hsl(var(--danger))",
         "input-placeholder": "hsl(var(--input-placeholder))",

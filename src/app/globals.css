@@ -26,6 +26,9 @@
   --destructive-foreground: 0 71% 43%;
   --destructive-background: 0 83% 95%;
 
+  --success: 123 38% 57%;
+  --warning: 36 100% 57%;
+
   /* Sizes */
   --navbar-height: 64px;
   --dashboard-sidebar-width: 280px;
