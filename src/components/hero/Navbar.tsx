@@ -10,7 +10,7 @@ import { PiBell, PiChatCircleDots } from "react-icons/pi";
 const Navbar = () => {
   const pathname = usePathname();
 
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   console.log();
 
