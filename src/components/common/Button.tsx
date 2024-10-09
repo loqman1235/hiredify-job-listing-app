@@ -1,17 +1,20 @@
 import { cn } from "@/libs/utils";
 import { Slot } from "@radix-ui/react-slot";
+// import { PiCircleNotch } from "react-icons/pi";
 
 type ButtonProps = {
   variant?: "primary" | "secondary" | "destructive";
   className?: string;
   children: React.ReactNode;
   asChild?: boolean;
+  isLoading?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button = ({
   variant = "primary",
   className,
   asChild,
+  isLoading,
   children,
   ...props
 }: ButtonProps) => {
@@ -28,12 +31,14 @@ const Button = ({
 
   return (
     <Comp
+      disabled={isLoading}
       className={cn(
-        `rounded-lg px-6 py-3 font-medium capitalize transition ${variants[variant]}`,
+        `flex items-center justify-center gap-2 rounded-lg px-6 py-3 font-medium capitalize transition disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]}`,
         className,
       )}
       {...props}
     >
+      {/* {isLoading && <PiCircleNotch className="size-5 animate-spin" />} */}
       {children}
     </Comp>
   );

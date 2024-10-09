@@ -2,17 +2,22 @@
 import Button from "@/components/common/Button";
 import FormField from "@/components/common/FormField";
 import AccountTypeSwitch from "./AccountTypeSwitch";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, registerSchemaType } from "@/libs/validation";
+import { registerAction } from "../actions";
+import { PiCircleNotch } from "react-icons/pi";
 
 type AuthFormProps = {
   page: "login" | "register";
 };
 
 const AuthForm = ({ page }: AuthFormProps) => {
+  const [error, setError] = useState<string>();
   const [isEmployer, setIsEmployer] = useState(false);
+  const [isPending, startTranstion] = useTransition();
+
   const {
     register,
     handleSubmit,
@@ -22,10 +27,13 @@ const AuthForm = ({ page }: AuthFormProps) => {
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = (data: registerSchemaType) => {
+  const onSubmit = (values: registerSchemaType) => {
     if (page === "register") {
-      console.log("Register Form");
-      console.log(data);
+      setError(undefined);
+      startTranstion(async () => {
+        const { error } = await registerAction(values);
+        if (error) setError(error);
+      });
     }
   };
 
@@ -89,11 +97,23 @@ const AuthForm = ({ page }: AuthFormProps) => {
             hasError={!!errors.password}
             errorMessage={errors.password?.message}
           />
+
+          {error && (
+            <span className="mt-2 text-sm text-destructive">{error}</span>
+          )}
         </>
       )}
-      <Button type="submit" className="py-3">
-        {page === "login" ? "Login" : "Sign Up"}
-      </Button>
+
+      {page === "login" ? (
+        <Button isLoading={isPending} type="submit" className="py-3">
+          {isPending && <PiCircleNotch className="size-5 animate-spin" />} Login
+        </Button>
+      ) : (
+        <Button isLoading={isPending} type="submit" className="py-3">
+          {isPending && <PiCircleNotch className="size-5 animate-spin" />} Sign
+          Up
+        </Button>
+      )}
     </form>
   );
 };
