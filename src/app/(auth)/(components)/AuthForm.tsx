@@ -2,7 +2,10 @@
 import Button from "@/components/common/Button";
 import FormField from "@/components/common/FormField";
 import AccountTypeSwitch from "./AccountTypeSwitch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema, registerSchemaType } from "@/libs/validation";
 
 type AuthFormProps = {
   page: "login" | "register";
@@ -10,9 +13,28 @@ type AuthFormProps = {
 
 const AuthForm = ({ page }: AuthFormProps) => {
   const [isEmployer, setIsEmployer] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<registerSchemaType>({
+    resolver: zodResolver(registerSchema),
+  });
+
+  const onSubmit = (data: registerSchemaType) => {
+    if (page === "register") {
+      console.log("Register Form");
+      console.log(data);
+    }
+  };
+
+  useEffect(() => {
+    setValue("isEmployer", isEmployer);
+  }, [isEmployer, setValue]);
 
   return (
-    <form className="flex flex-col gap-5">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
       {page === "login" ? (
         <>
           <FormField
@@ -42,13 +64,20 @@ const AuthForm = ({ page }: AuthFormProps) => {
             label="Username"
             placeholder="Enter your username"
             isRequired
+            {...register("username")}
+            hasError={!!errors.username}
+            errorMessage={errors.username?.message}
           />
+
           <FormField
             id="email"
             type="email"
             label="Email"
             placeholder="Enter your email"
             isRequired
+            {...register("email")}
+            hasError={!!errors.email}
+            errorMessage={errors.email?.message}
           />
           <FormField
             id="password"
@@ -56,6 +85,9 @@ const AuthForm = ({ page }: AuthFormProps) => {
             label="Password"
             placeholder="Enter your password"
             isRequired
+            {...register("password")}
+            hasError={!!errors.password}
+            errorMessage={errors.password?.message}
           />
         </>
       )}

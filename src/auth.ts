@@ -20,6 +20,7 @@ export const lucia = new Lucia(adapter, {
     return {
       id: databaseUserAttributes.id,
       username: databaseUserAttributes.username,
+      isEmployer: databaseUserAttributes.isEmployer,
     };
   },
 });
@@ -27,6 +28,7 @@ export const lucia = new Lucia(adapter, {
 interface DatabaseUserAttributes {
   id: string;
   username: string;
+  isEmployer: boolean;
 }
 
 declare module "lucia" {
