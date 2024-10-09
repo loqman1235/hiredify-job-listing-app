@@ -18,7 +18,7 @@ const sidebarNav = [
   {
     icon: PiBookmarkSimple,
     text: "shortlist jobs",
-    href: "/dashboard/shortlist",
+    href: "/dashboard/shortlist-jobs",
   },
   { icon: PiChatCircleDots, text: "messages", href: "/dashboard/messages" },
 ] as const;

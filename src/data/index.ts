@@ -9,6 +9,7 @@ import {
   PiTruck,
   PiUsersFour,
 } from "react-icons/pi";
+import netflixLogo from "@/assets/images/logos/netflix.svg";
 
 export const categories = [
   { name: "Finance", count: 1, icon: PiBank },
@@ -47,5 +48,26 @@ export const testimonials = [
       avatar: "https://randomuser.me/api/portraits/women/2.jpg",
       jobTitle: "Marketing Specialist",
     },
+  },
+] as const;
+
+export const appliedJobsData = [
+  {
+    image: netflixLogo,
+    title: "Frontend Developer",
+    category: "Development",
+    location: "San Francisco, CA",
+  },
+  {
+    image: netflixLogo,
+    title: "Marketing Manager",
+    category: "Marketing",
+    location: "New York, NY",
+  },
+  {
+    image: netflixLogo,
+    title: "UX/UI Designer",
+    category: "Design",
+    location: "Seattle, WA",
   },
 ] as const;

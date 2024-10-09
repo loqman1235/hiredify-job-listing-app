@@ -24,35 +24,42 @@ type TableRowProps = {
 type TableDataProps = {
   className?: string;
   children: React.ReactNode;
-};
+  colSpan?: number;
+} & React.HTMLAttributes<HTMLTableCellElement>;
 
 type TableHeaderProps = {
   className?: string;
   children: React.ReactNode;
-};
+  colSpan?: number;
+} & React.HTMLAttributes<HTMLTableCellElement>;
 
 const TableBody = ({ className, children }: TableBodyProps) => {
-  return (
-    <tbody className={cn("border-b border-b-muted", className)}>
-      {children}
-    </tbody>
-  );
+  return <tbody className={cn("", className)}>{children}</tbody>;
 };
 
 const TableHead = ({ className, children, ...props }: TableHeadProps) => {
   return (
-    <thead
-      className={cn("bg-primary/5 text-left text-sm text-primary", className)}
-      {...props}
-    >
+    <thead className={cn("text-left", className)} {...props}>
       {children}
     </thead>
   );
 };
 
-const TableHeader = ({ className, children }: TableHeaderProps) => {
+const TableHeader = ({
+  className,
+  colSpan,
+  children,
+  ...props
+}: TableHeaderProps) => {
   return (
-    <th className={cn("bg-muted px-6 py-3 text-text-secondary", className)}>
+    <th
+      colSpan={colSpan}
+      className={cn(
+        "bg-muted px-6 py-3 text-sm font-semibold capitalize text-text-secondary",
+        className,
+      )}
+      {...props}
+    >
       {children}
     </th>
   );
@@ -71,21 +78,32 @@ const TableRow = ({ className, children, ...props }: TableRowProps) => {
   );
 };
 
-const TableData = ({ className, children }: TableDataProps) => {
-  return <td className={cn("px-6 py-4", className)}>{children}</td>;
+const TableData = ({
+  className,
+  colSpan,
+  children,
+  ...props
+}: TableDataProps) => {
+  return (
+    <td colSpan={colSpan} className={cn("px-6 py-4", className)} {...props}>
+      {children}
+    </td>
+  );
 };
 
 const Table = ({ className, children, ...props }: TableProps) => {
   return (
-    <table
-      className={cn(
-        "!m-0 w-full table-auto text-sm text-text-secondary",
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </table>
+    <div className="overflow-x-auto">
+      <table
+        className={cn(
+          "!m-0 w-full table-auto text-sm text-text-secondary",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </table>
+    </div>
   );
 };
 

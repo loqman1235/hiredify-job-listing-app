@@ -1,4 +1,3 @@
-import Badge from "@/components/common/Badge";
 import Button from "@/components/common/Button";
 import Card from "@/components/common/Card";
 import {
@@ -14,18 +13,17 @@ import { appliedJobsData } from "@/data";
 import Image from "next/image";
 import Link from "next/link";
 
-const Applied = () => {
+const ShortlistJobs = () => {
   return (
     <div>
-      <h3 className="mb-5 text-2xl font-bold tracking-tight">Applied Jobs</h3>
+      <h3 className="mb-5 text-2xl font-bold tracking-tight">Shortlist Jobs</h3>
       <Card>
         {/* Table */}
         <Table>
           <TableHead>
             <TableRow>
               <TableHeader className="rounded-s-md">Job Title</TableHeader>
-              <TableHeader>Date Applied</TableHeader>
-              <TableHeader>Status</TableHeader>
+              <TableHeader>Posted date</TableHeader>
               <TableHeader className="rounded-e-md">Actions</TableHeader>
             </TableRow>
           </TableHead>
@@ -72,9 +70,7 @@ const Applied = () => {
                   </div>
                 </TableData>
                 <TableData>July 20, 2021</TableData>
-                <TableData>
-                  <Badge variant="success" text="approved" />
-                </TableData>
+
                 <TableData className="flex min-h-[80px] items-center">
                   <div className="flex items-center gap-2">
                     <Button variant="destructive" className="px-1.5 py-1.5">
@@ -94,4 +90,4 @@ const Applied = () => {
   );
 };
 
-export default Applied;
+export default ShortlistJobs;
