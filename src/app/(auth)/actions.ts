@@ -13,7 +13,7 @@ export const registerAction = async (
   creds: registerSchemaType,
 ): Promise<{ error: string }> => {
   try {
-    const { username, email, password , isEmployer} = creds;
+    const { username, email, password, isEmployer } = creds;
 
     // Hash password
     const passwordHash = await bcrypt.hash(password, 10);
@@ -57,7 +57,7 @@ export const registerAction = async (
         username,
         email,
         password_hash: passwordHash,
-        isEmployer
+        isEmployer,
       },
     });
 
@@ -69,7 +69,7 @@ export const registerAction = async (
       sessionCookie.attributes,
     );
 
-    return redirect("/");
+    return redirect("/dashboard");
   } catch (error) {
     if (isRedirectError(error)) throw error;
     console.log(error);
