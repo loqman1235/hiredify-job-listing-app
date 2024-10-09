@@ -33,7 +33,7 @@ const FormField = ({
           {...props}
           id={props.id}
           className={cn(
-            "w-full rounded-md border border-border bg-transparent p-3 outline-none placeholder:text-input-placeholder focus:border-primary",
+            "w-full rounded-md border border-border bg-transparent p-3 outline-none placeholder:text-text-secondary focus:border-primary",
             className,
           )}
           type={type === "password" && !isPassHidden ? "text" : type}

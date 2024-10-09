@@ -82,7 +82,7 @@ const SelectBox = ({
       >
         {/* SELECTED VALUE */}
         <span
-          className={`text-input-placeholder ${selectedVal && "!text-text-primary"}`}
+          className={`text-text-secondary ${selectedVal && "!text-text-primary"}`}
         >
           {selectedVal ? selectedVal : defaultText}
         </span>
