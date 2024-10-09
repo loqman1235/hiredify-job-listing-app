@@ -101,7 +101,7 @@
   /* Active bullet style */
   .custom-bullet-active {
     width: 40px;
-    background-color: hsl(var(--primary));
+    background-color: hsl(var(--text));
   }
 }
 

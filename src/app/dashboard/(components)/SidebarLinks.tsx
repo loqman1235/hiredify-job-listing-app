@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   PiBookmarkSimple,
-  PiChatCircleDots,
+  // PiChatCircleDots,
   PiGauge,
   PiMegaphone,
   PiUser,
@@ -20,7 +20,7 @@ const sidebarNav = [
     text: "shortlist jobs",
     href: "/dashboard/shortlist-jobs",
   },
-  { icon: PiChatCircleDots, text: "messages", href: "/dashboard/messages" },
+  // { icon: PiChatCircleDots, text: "messages", href: "/dashboard/messages" },
 ] as const;
 
 const SidebarLinks = () => {
