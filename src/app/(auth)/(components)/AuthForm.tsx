@@ -3,10 +3,15 @@ import Button from "@/components/common/Button";
 import FormField from "@/components/common/FormField";
 import AccountTypeSwitch from "./AccountTypeSwitch";
 import { useEffect, useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema, registerSchemaType } from "@/libs/validation";
-import { registerAction } from "../actions";
+import {
+  registerSchema,
+  registerSchemaType,
+  loginSchema,
+  loginSchemaType,
+} from "@/libs/validation";
+import { loginAction, registerAction } from "../actions";
 import { PiCircleNotch } from "react-icons/pi";
 
 type AuthFormProps = {
@@ -23,18 +28,24 @@ const AuthForm = ({ page }: AuthFormProps) => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<registerSchemaType>({
-    resolver: zodResolver(registerSchema),
+  } = useForm<registerSchemaType | loginSchemaType>({
+    resolver: zodResolver(page === "login" ? loginSchema : registerSchema),
   });
 
-  const onSubmit = (values: registerSchemaType) => {
-    if (page === "register") {
-      setError(undefined);
-      startTranstion(async () => {
-        const { error } = await registerAction(values);
+  const onSubmit = (values: registerSchemaType | loginSchemaType) => {
+    setError(undefined);
+    startTranstion(async () => {
+      if (page === "login") {
+        const result = await loginAction(values as loginSchemaType);
+
+        if (result && "error" in result) {
+          setError(result.error);
+        }
+      } else {
+        const { error } = await registerAction(values as registerSchemaType);
         if (error) setError(error);
-      });
-    }
+      }
+    });
   };
 
   useEffect(() => {
@@ -51,6 +62,9 @@ const AuthForm = ({ page }: AuthFormProps) => {
             label="Email"
             placeholder="Enter your email"
             isRequired
+            {...register("email")}
+            hasError={!!errors.email}
+            errorMessage={errors.email?.message}
           />
           <FormField
             id="password"
@@ -58,7 +72,13 @@ const AuthForm = ({ page }: AuthFormProps) => {
             label="Password"
             placeholder="Enter your password"
             isRequired
+            {...register("password")}
+            hasError={!!errors.password}
+            errorMessage={errors.password?.message}
           />
+          {error && (
+            <span className="mt-2 text-sm text-destructive">{error}</span>
+          )}
         </>
       ) : (
         <>
@@ -73,8 +93,10 @@ const AuthForm = ({ page }: AuthFormProps) => {
             placeholder="Enter your username"
             isRequired
             {...register("username")}
-            hasError={!!errors.username}
-            errorMessage={errors.username?.message}
+            hasError={!!(errors as FieldErrors<registerSchemaType>).username}
+            errorMessage={
+              (errors as FieldErrors<registerSchemaType>).username?.message
+            }
           />
 
           <FormField

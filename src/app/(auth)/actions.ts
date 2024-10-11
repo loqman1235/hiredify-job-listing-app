@@ -2,7 +2,11 @@
 
 import { lucia } from "@/auth";
 import prisma from "@/libs/prisma";
-import { registerSchemaType } from "@/libs/validation";
+import {
+  registerSchemaType,
+  loginSchemaType,
+  loginSchema,
+} from "@/libs/validation";
 import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
 import { isRedirectError } from "next/dist/client/components/redirect";
@@ -62,6 +66,57 @@ export const registerAction = async (
     });
 
     const session = await lucia.createSession(userId, {});
+    const sessionCookie = lucia.createSessionCookie(session.id);
+    cookies().set(
+      sessionCookie.name,
+      sessionCookie.value,
+      sessionCookie.attributes,
+    );
+
+    return redirect("/dashboard");
+  } catch (error) {
+    if (isRedirectError(error)) throw error;
+    console.log(error);
+    return {
+      error: "Something went wrong. Try again later",
+    };
+  }
+};
+
+export const loginAction = async (
+  creds: loginSchemaType,
+): Promise<{ error: string } | void> => {
+  try {
+    const { email, password } = loginSchema.parse(creds);
+
+    // Check if user exists
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        email: {
+          equals: email,
+        },
+      },
+    });
+
+    if (!existingUser) {
+      return {
+        error: "Wrong email or password",
+      };
+    }
+
+    // Check password
+    const isValidPassword = await bcrypt.compare(
+      password,
+      existingUser.password_hash,
+    );
+
+    if (!isValidPassword) {
+      return {
+        error: "Wrong email or password",
+      };
+    }
+
+    const session = await lucia.createSession(existingUser.id, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
     cookies().set(
       sessionCookie.name,
