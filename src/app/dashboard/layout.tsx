@@ -1,7 +1,6 @@
 import Navbar from "@/components/hero/Navbar";
 import { Metadata } from "next";
 import Sidebar from "./(components)/Sidebar";
-import { SessionProvider } from "@/context/SessionProvider";
 import { validateRequest } from "@/auth";
 import { redirect } from "next/navigation";
 
@@ -18,17 +17,15 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <SessionProvider value={session}>
-      <main>
-        <Navbar />
-        <div className="flex">
-          <Sidebar />
-          <div className="w-full p-5 md:w-[calc(100%-var(--dashboard-sidebar-width))]">
-            {children}
-          </div>
+    <main>
+      <Navbar />
+      <div className="flex">
+        <Sidebar />
+        <div className="w-full p-5 md:w-[calc(100%-var(--dashboard-sidebar-width))]">
+          {children}
         </div>
-      </main>
-    </SessionProvider>
+      </div>
+    </main>
   );
 };
 

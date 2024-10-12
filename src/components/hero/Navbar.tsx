@@ -6,13 +6,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import UserAvatar from "../common/UserAvatar";
 import { PiBell, PiChatCircleDots } from "react-icons/pi";
+import { useSession } from "@/context/SessionProvider";
 
 const Navbar = () => {
+  const { session } = useSession();
   const pathname = usePathname();
-
-  const isLoggedIn = false;
-
-  console.log();
 
   return (
     <div
@@ -24,7 +22,7 @@ const Navbar = () => {
           {!pathname.startsWith("/dashboard") && <NavLinks />}
         </div>
 
-        {!isLoggedIn ? (
+        {!session ? (
           <div className="flex items-center gap-2">
             <Button variant="secondary" asChild>
               <Link href="/login">Login</Link>

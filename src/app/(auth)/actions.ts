@@ -1,6 +1,6 @@
 "use server";
 
-import { lucia } from "@/auth";
+import { lucia, validateRequest } from "@/auth";
 import prisma from "@/libs/prisma";
 import {
   registerSchemaType,
@@ -132,4 +132,22 @@ export const loginAction = async (
       error: "Something went wrong. Try again later",
     };
   }
+};
+
+export const logoutAction = async () => {
+  const { session } = await validateRequest();
+
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+
+  await lucia.invalidateSession(session.id);
+  const sessionCookie = lucia.createBlankSessionCookie();
+  cookies().set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes,
+  );
+
+  return redirect("/login");
 };
