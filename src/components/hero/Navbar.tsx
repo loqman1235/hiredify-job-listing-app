@@ -32,7 +32,7 @@ const Navbar = () => {
             </Button>
           </div>
         ) : (
-          <div className="flex items-center gap-5">
+          <div className="flex h-full items-center gap-5">
             <button className="relative">
               <PiChatCircleDots className="size-6 text-[var(--text-icon)] transition hover:text-text-primary" />
               <span className="absolute right-0 top-0 rounded-full border border-background bg-primary p-1 text-xs"></span>
