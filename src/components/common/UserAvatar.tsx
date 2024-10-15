@@ -28,12 +28,12 @@ const links = [
 ] as const;
 
 const UserAvatar = ({ avatarUrl, className }: UserAvatarProps) => {
-  const [toggleDropdown, setToggleDropdown] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
     <div className="relative flex h-full items-center">
       <div
-        onClick={() => setToggleDropdown((prev) => !prev)}
+        onClick={() => setIsDropdownOpen((prev) => !prev)}
         className={cn(
           "h-12 w-12 cursor-pointer overflow-hidden rounded-full",
           className,
@@ -47,13 +47,13 @@ const UserAvatar = ({ avatarUrl, className }: UserAvatarProps) => {
           className="h-full w-full object-cover"
         />
       </div>
-      <Dropdown isHidden={toggleDropdown}>
+      <Dropdown isOpen={isDropdownOpen} setIsOpen={setIsDropdownOpen}>
         <ul>
           {links.map((link) => (
             <li key={link.href}>
               <Link
                 className="flex items-center gap-5 rounded-md px-2.5 py-2 font-medium capitalize tracking-tight text-text-secondary transition hover:bg-primary/10 hover:text-primary"
-                href="/dashboard/profile"
+                href={link.href}
               >
                 <link.icon className="size-6" />
                 {link.text}
