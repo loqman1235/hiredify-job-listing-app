@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import defaultAvatarImg from "@/assets/images/avatar.png";
 import { cn } from "@/libs/utils";
-import Dropdown from "./Dropdown";
+import { Dropdown, DropdownItem } from "./Dropdown";
 import { PiBookmarkSimple, PiGauge, PiMegaphone, PiUser } from "react-icons/pi";
 import Link from "next/link";
 import LogoutBtn from "@/app/dashboard/(components)/LogoutBtn";
@@ -50,7 +50,7 @@ const UserAvatar = ({ avatarUrl, className }: UserAvatarProps) => {
       <Dropdown isOpen={isDropdownOpen} setIsOpen={setIsDropdownOpen}>
         <ul>
           {links.map((link) => (
-            <li key={link.href}>
+            <DropdownItem key={link.href} setIsOpen={setIsDropdownOpen}>
               <Link
                 className="flex items-center gap-5 rounded-md px-2.5 py-2 font-medium capitalize tracking-tight text-text-secondary transition hover:bg-primary/10 hover:text-primary"
                 href={link.href}
@@ -58,7 +58,7 @@ const UserAvatar = ({ avatarUrl, className }: UserAvatarProps) => {
                 <link.icon className="size-6" />
                 {link.text}
               </Link>
-            </li>
+            </DropdownItem>
           ))}
           <li>
             <LogoutBtn className="py-2" />

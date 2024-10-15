@@ -9,6 +9,15 @@ type DropdownProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+type DropdownItemProps = {
+  children: React.ReactNode;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const DropdownItem = ({ children, setIsOpen }: DropdownItemProps) => {
+  return <li onClick={() => setIsOpen(false)}>{children}</li>;
+};
+
 const Dropdown = ({
   children,
   className,
@@ -32,8 +41,6 @@ const Dropdown = ({
     return () => document.removeEventListener("mousedown", closeOnClickOutside);
   }, [setIsOpen]);
 
-  console.log(isOpen);
-
   return (
     <div
       ref={dropdownRef}
@@ -47,4 +54,4 @@ const Dropdown = ({
   );
 };
 
-export default Dropdown;
+export { Dropdown, DropdownItem };
