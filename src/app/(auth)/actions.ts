@@ -61,7 +61,7 @@ export const registerAction = async (
         username,
         email,
         password_hash: passwordHash,
-        isEmployer,
+        role: isEmployer ? "EMPLOYER" : "CANDIDATE",
       },
     });
 

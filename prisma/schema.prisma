@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["omitApi"]
 }
 
 datasource db {
@@ -10,90 +11,110 @@ datasource db {
 model User {
   id               String            @id @default(auto()) @map("_id") @db.ObjectId
   username         String
-  email            String
+  email            String            @unique
   password_hash    String
   avatar           String?
-  isEmployer       Boolean           @default(false)
   role             Role              @default(CANDIDATE)
   candidateProfile CandidateProfile?
   employerProfile  EmployerProfile?
-  jobs             Job[]
-  Session          Session[]
+  sessions         Session[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
 
   @@map("users")
 }
 
+model Session {
+  id        String   @id @map("_id")
+  userId    String   @unique @db.ObjectId
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("sessions")
+}
+
 model CandidateProfile {
-  id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  candidate   User?       @relation(fields: [candidateId], references: [id])
-  candidateId String      @unique @db.ObjectId
-  fullName    String?
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  candidateId String        @unique @db.ObjectId
+  candidate   User?         @relation(fields: [candidateId], references: [id])
+  fullname    String?
   dateOfBirth DateTime?
-  gender      Gender?     @default(MALE)
+  gender      Gender?
   phoneNumber String?
-  email       String?
   address     String?
   location    String?
   salary      Int?
   salaryType  SalaryType?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  application Application[]
 
   @@map("candidate_profiles")
 }
 
 model EmployerProfile {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  employer    User?    @relation(fields: [employerId], references: [id])
   employerId  String   @unique @db.ObjectId
-  companyName String?
-  address     String?
-  location    String?
-  description String?
+  employer    User?    @relation(fields: [employerId], references: [id])
+  fullname    String?
+  phoneNumber String?
   website     String?
   companySize Int?
+  about       String?
+  location    String?
+  address     String?
+  jobs        Job[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  @@map("employer_profiles")
+  @@map("employe_profiles")
 }
 
 model Job {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  employer    User?      @relation(fields: [employerId], references: [id])
-  employerId  String     @unique @db.ObjectId
-  title       String
-  description String
-  location    String
-  category    String
-  type        JobType
-  minSalary   Int
-  maxSalary   Int
-  salaryType  SalaryType
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id           String          @id @default(auto()) @map("_id") @db.ObjectId
+  employerId   String          @db.ObjectId
+  employer     EmployerProfile @relation(fields: [employerId], references: [id])
+  categoryId   String          @db.ObjectId
+  category     Category        @relation(fields: [categoryId], references: [id])
+  title        String
+  description  String
+  type         JobType
+  salaryType   SalaryType
+  minSalary    Int
+  maxSalary    Int
+  location     String
+  address      String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  applications Application[]
 
   @@map("jobs")
 }
 
 model Application {
-  id        String            @id @default(auto()) @map("_id") @db.ObjectId
-  status    ApplicationStatus @default(PENDING)
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  jobId       String            @db.ObjectId
+  job         Job               @relation(fields: [jobId], references: [id])
+  candidateId String            @db.ObjectId
+  candidate   CandidateProfile  @relation(fields: [candidateId], references: [id])
+  status      ApplicationStatus @default(PENDING)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 
   @@map("applications")
 }
 
-model Session {
-  id        String   @id @map("_id")
-  userId    String   @db.ObjectId
-  expiresAt DateTime
-  user      User     @relation(references: [id], fields: [userId])
+model Category {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  jobs      Job[]
 
-  @@map("sessions")
+  @@map("categories")
 }
 
+// ENUMS
 enum Role {
   CANDIDATE
   EMPLOYER
@@ -112,13 +133,11 @@ enum SalaryType {
 }
 
 enum JobType {
+  FREELANCE
   FULL_TIME
   PART_TIME
-  CONTRACT
   INTERNSHIP
   TEMPORARY
-  VOLUNTARY
-  FREELANCE
 }
 
 enum ApplicationStatus {
