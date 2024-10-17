@@ -77,6 +77,30 @@ export const appliedJobsData = [
   },
 ] as const;
 
+export const postedJobsData = [
+  {
+    title: "Frontend Developer",
+    numOfApplicants: 20,
+    createdAt: "October 17, 2024",
+    expiresAt: "November 17, 2024",
+    status: "published",
+  },
+  {
+    title: "UI Designer",
+    numOfApplicants: 10,
+    createdAt: "October 8, 2024",
+    expiresAt: "November 8, 2024",
+    status: "published",
+  },
+  {
+    title: "Backend Developer",
+    numOfApplicants: 8,
+    createdAt: "August 9, 2024",
+    expiresAt: "September 17, 2024",
+    status: "published",
+  },
+] as const;
+
 export const sidebarCandidateNav = [
   { icon: PiGauge, text: "dashboard", href: "/dashboard" },
   { icon: PiUser, text: "profile", href: "/dashboard/profile" },

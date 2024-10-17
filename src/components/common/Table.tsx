@@ -55,7 +55,7 @@ const TableHeader = ({
     <th
       colSpan={colSpan}
       className={cn(
-        "bg-muted px-6 py-3 text-sm font-semibold capitalize text-text-secondary",
+        "bg-muted px-6 py-3 text-xs font-semibold uppercase text-text-secondary",
         className,
       )}
       {...props}
