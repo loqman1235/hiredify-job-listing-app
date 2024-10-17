@@ -22,14 +22,19 @@ import "ckeditor5/ckeditor5.css";
 
 type TextEditorProps = {
   label: string;
+  isRequired?: boolean;
   placeholder?: string;
 };
 
-const TextEditor = ({ label, placeholder }: TextEditorProps) => {
+const TextEditor = ({
+  label,
+  placeholder,
+  isRequired = false,
+}: TextEditorProps) => {
   return (
     <div className="space-y-1">
       <label className="flex items-center gap-1 text-sm font-medium capitalize">
-        {label}
+        {label} {isRequired && <span className="text-destructive">*</span>}
       </label>
       <CKEditor
         editor={ClassicEditor}

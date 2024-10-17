@@ -68,7 +68,7 @@ const SelectBox = ({
         <label onClick={toggleSelectDropdown} className="text-sm font-medium">
           {label}{" "}
           {variant === "primary" && isRequired && (
-            <span className="text-destructive-foreground">*</span>
+            <span className="text-destructive">*</span>
           )}
         </label>
       )}
@@ -82,7 +82,7 @@ const SelectBox = ({
       >
         {/* SELECTED VALUE */}
         <span
-          className={`text-text-secondary ${selectedVal && "!text-text-primary"}`}
+          className={`font-light text-text-secondary ${selectedVal && "!text-text-primary"}`}
         >
           {selectedVal ? selectedVal : defaultText}
         </span>

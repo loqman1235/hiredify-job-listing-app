@@ -118,7 +118,7 @@ export const sidebarEmployerNav = [
   { icon: PiUser, text: "profile", href: "/dashboard/profile" },
 
   { icon: PiBriefcase, text: "my jobs", href: "/dashboard/jobs" },
-  { icon: PiPencil, text: "create job", href: "/dashboard/jobs/create" },
+  { icon: PiPencil, text: "create job", href: "/dashboard/create-job" },
   {
     icon: PiBookmarkSimple,
     text: "shortlist candidates",
