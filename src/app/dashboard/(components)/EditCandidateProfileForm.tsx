@@ -9,7 +9,7 @@ import { PiCamera, PiCaretDown, PiUploadSimple, PiX } from "react-icons/pi";
 import { useState } from "react";
 import Card from "@/components/common/Card";
 
-const EditProfileForm = () => {
+const EditCandidateProfileForm = () => {
   const [socialNetworks, setSocialNetworks] = useState<string[]>([
     "https://twitter.com/",
   ]);
@@ -227,4 +227,4 @@ const EditProfileForm = () => {
   );
 };
 
-export default EditProfileForm;
+export default EditCandidateProfileForm;

@@ -1,12 +1,17 @@
 import {
   PiAtom,
   PiBank,
+  PiBookmarkSimple,
+  PiBriefcase,
+  PiGauge,
   PiHeadset,
   PiHeartbeat,
   PiMegaphone,
   PiPaintBrush,
+  PiPencil,
   PiRocket,
   PiTruck,
+  PiUser,
   PiUsersFour,
 } from "react-icons/pi";
 import netflixLogo from "@/assets/images/logos/netflix.svg";
@@ -69,5 +74,30 @@ export const appliedJobsData = [
     title: "UX/UI Designer",
     category: "Design",
     location: "Seattle, WA",
+  },
+] as const;
+
+export const sidebarCandidateNav = [
+  { icon: PiGauge, text: "dashboard", href: "/dashboard" },
+  { icon: PiUser, text: "profile", href: "/dashboard/profile" },
+
+  { icon: PiMegaphone, text: "my applied", href: "/dashboard/applied" },
+  {
+    icon: PiBookmarkSimple,
+    text: "shortlist jobs",
+    href: "/dashboard/shortlist-jobs",
+  },
+] as const;
+
+export const sidebarEmployerNav = [
+  { icon: PiGauge, text: "dashboard", href: "/dashboard" },
+  { icon: PiUser, text: "profile", href: "/dashboard/profile" },
+
+  { icon: PiBriefcase, text: "my jobs", href: "/dashboard/jobs" },
+  { icon: PiPencil, text: "create job", href: "/dashboard/jobs/create" },
+  {
+    icon: PiBookmarkSimple,
+    text: "shortlist candidates",
+    href: "/dashboard/shortlist-candidates",
   },
 ] as const;
