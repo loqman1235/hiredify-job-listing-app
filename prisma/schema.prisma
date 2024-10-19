@@ -37,10 +37,10 @@ model CandidateProfile {
   id          String        @id @default(auto()) @map("_id") @db.ObjectId
   candidateId String        @unique @db.ObjectId
   candidate   User?         @relation(fields: [candidateId], references: [id])
-  categoryId  String        @db.ObjectId
-  category    Category      @relation(fields: [categoryId], references: [id])
+  // categoryId  String        @db.ObjectId
+  // category    Category?     @relation(fields: [categoryId], references: [id])
   fullname    String?
-  dateOfBirth DateTime?
+  dateOfBirth String?
   gender      Gender?
   phoneNumber String?
   address     String?
@@ -109,12 +109,12 @@ model Application {
 }
 
 model Category {
-  id         String             @id @default(auto()) @map("_id") @db.ObjectId
-  name       String             @unique
-  createdAt  DateTime           @default(now())
-  updatedAt  DateTime           @updatedAt
-  jobs       Job[]
-  candidates CandidateProfile[]
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  jobs      Job[]
+  // candidates CandidateProfile[]
 
   @@map("categories")
 }

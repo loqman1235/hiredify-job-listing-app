@@ -27,6 +27,7 @@ type TextEditorProps = {
   onChange: (value: string) => void;
   hasError?: boolean;
   errorMessage?: string;
+  value?: string;
 };
 
 const TextEditor = ({
@@ -36,6 +37,7 @@ const TextEditor = ({
   hasError,
   errorMessage,
   onChange,
+  value = "",
 }: TextEditorProps) => {
   return (
     <div className="space-y-1">
@@ -43,6 +45,7 @@ const TextEditor = ({
         {label} {isRequired && <span className="text-destructive">*</span>}
       </label>
       <CKEditor
+        data={value}
         editor={ClassicEditor}
         config={{
           toolbar: {
