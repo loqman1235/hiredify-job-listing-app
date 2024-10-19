@@ -12,9 +12,13 @@ type SelectBoxProps = {
   onChange?: (val: string) => void;
   className?: string;
   isRequired?: boolean;
+  hasError?: boolean;
+  errorMessage?: string;
 };
 
 const SelectBox = ({
+  hasError,
+  errorMessage,
   variant = "primary",
   options,
   label,
@@ -75,7 +79,7 @@ const SelectBox = ({
       <div
         ref={selectRef}
         className={cn(
-          `relative cursor-pointer p-3 ${variant === "primary" && "rounded-md border border-border"}`,
+          `relative cursor-pointer p-3 ${hasError && "border-destructive"} ${variant === "primary" && "rounded-md border border-border"}`,
           className,
         )}
         onClick={toggleSelectDropdown}
@@ -117,6 +121,10 @@ const SelectBox = ({
           </ul>
         )}
       </div>
+
+      {hasError && (
+        <span className="text-sm text-destructive">{errorMessage}</span>
+      )}
     </div>
   );
 };

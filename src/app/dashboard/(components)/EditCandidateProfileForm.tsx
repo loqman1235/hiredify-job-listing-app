@@ -5,48 +5,32 @@ import FormField from "@/components/common/FormField";
 import SelectBox from "@/components/common/SelectBox";
 import TextEditor from "./TextEditor";
 import Image from "next/image";
-import { PiCamera, PiCaretDown, PiUploadSimple, PiX } from "react-icons/pi";
-import { useState } from "react";
+import { PiCamera, PiUploadSimple } from "react-icons/pi";
 import Card from "@/components/common/Card";
+import { useForm } from "react-hook-form";
+import {
+  editCandidateProfileSchema,
+  editCandidateProfileSchemaType,
+} from "@/libs/validation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Gender, SalaryType } from "@prisma/client";
 
 const EditCandidateProfileForm = () => {
-  const [socialNetworks, setSocialNetworks] = useState<string[]>([
-    "https://twitter.com/",
-  ]);
-  const [socialDropdownVisible, setSocialDropdownVisible] = useState<boolean[]>(
-    Array(socialNetworks.length).fill(false),
-  );
+  const {
+    register,
+    setValue,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<editCandidateProfileSchemaType>({
+    resolver: zodResolver(editCandidateProfileSchema),
+  });
 
-  const addSocialNetwork = () => {
-    setSocialNetworks([...socialNetworks, ""]);
-    setSocialDropdownVisible([...socialDropdownVisible, false]);
+  const onSubmit = (values: editCandidateProfileSchemaType) => {
+    console.log(values);
   };
 
-  const removeSocialNetwork = (index: number) => {
-    if (index === 0) return;
-    setSocialNetworks(socialNetworks.filter((_, i) => i !== index));
-    setSocialDropdownVisible(
-      socialDropdownVisible.filter((_, i) => i !== index),
-    );
-  };
-
-  // const updateSocialNetwork = (index: number, value: string) => {
-  //   setSocialNetworks(
-  //     socialNetworks.map((socialNetwork, i) =>
-  //       i === index ? value : socialNetwork,
-  //     ),
-  //   );
-  // };
-
-  const toggleDropdown = (index: number) => {
-    setSocialDropdownVisible(
-      socialDropdownVisible.map((isVisible, i) =>
-        i === index ? !isVisible : isVisible,
-      ),
-    );
-  };
   return (
-    <form className="space-y-5">
+    <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
       <Card title="My Profile">
         {/* PROFILE PICTURE */}
         <div className="relative h-[280px] w-full overflow-hidden rounded-md bg-muted md:h-40 md:w-40">
@@ -73,44 +57,41 @@ const EditCandidateProfileForm = () => {
             id="fullname"
             placeholder="Enter your full name"
             isRequired
+            {...register("fullname")}
+            hasError={!!errors.fullname}
+            errorMessage={errors.fullname?.message}
           />
           <FormField
             className="flex-1"
             label="Date of birth"
             id="dob"
             type="date"
+            {...register("dob")}
+            hasError={!!errors.dob}
+            errorMessage={errors.dob?.message}
           />
         </div>
 
         <div className="flex w-full flex-col items-center gap-5 md:flex-row">
           <SelectBox
-            options={["male", "female"]}
+            options={["MALE", "FEMALE"]}
             label="Gender"
             variant="primary"
             defaultText="Select your gender"
+            onChange={(val: string) =>
+              setValue("gender", val as Gender)
+            }
+            hasError={!!errors.gender}
+            errorMessage={errors.gender?.message}
           />
-          <FormField
-            className="flex-1"
-            label="Age"
-            type="number"
-            id="age"
-            placeholder="Enter your age"
-          />
-        </div>
-
-        <div className="flex w-full flex-col items-center gap-5 md:flex-row">
-          <FormField
-            className="flex-1"
-            label="Phone number"
-            id="phoneNum"
-            placeholder="Enter your phone number"
-          />
-          <FormField
-            className="flex-1"
-            label="Email"
-            type="email"
-            id="email"
-            placeholder="Enter your email"
+          <SelectBox
+            options={["Web Development", "Design", "Marketing", "Finance"]}
+            label="Category"
+            variant="primary"
+            defaultText="Select category"
+            onChange={(val: string) => setValue("category", val)}
+            hasError={!!errors.category}
+            errorMessage={errors.category?.message}
           />
         </div>
 
@@ -120,12 +101,18 @@ const EditCandidateProfileForm = () => {
             label="Address"
             id="address"
             placeholder="Enter your address"
+            {...register("address")}
+            hasError={!!errors.address}
+            errorMessage={errors.address?.message}
           />
           <FormField
             className="flex-1"
             label="Location"
             id="location"
             placeholder="Enter your location"
+            {...register("location")}
+            hasError={!!errors.location}
+            errorMessage={errors.location?.message}
           />
         </div>
 
@@ -135,13 +122,34 @@ const EditCandidateProfileForm = () => {
             label="Salary ($)"
             id="salary"
             placeholder="Enter your salary"
+            {...register("salary")}
           />
 
           <SelectBox
-            options={["Hourly", "Daily", "Weekly", "Monthly", "Yearly"]}
+            options={["HOURLY", "DAILY", "MONTHLY", "YEARLY"]}
             label="Salary Type"
             variant="primary"
             defaultText="Select your salary type"
+            onChange={(val) =>
+              setValue(
+                "salaryType",
+                val as SalaryType,
+              )
+            }
+            hasError={!!errors.salaryType}
+            errorMessage={errors.salaryType?.message}
+          />
+        </div>
+
+        <div className="flex w-full flex-col items-center gap-5 md:flex-row">
+          <FormField
+            className="flex-1"
+            label="Phone number"
+            id="phoneNum"
+            placeholder="Enter your phone number"
+            {...register("phoneNumber")}
+            hasError={!!errors.phoneNumber}
+            errorMessage={errors.phoneNumber?.message}
           />
         </div>
 
@@ -150,62 +158,17 @@ const EditCandidateProfileForm = () => {
             label="Job title"
             id="jobTitle"
             placeholder="Enter job title"
+            {...register("title")}
+            hasError={!!errors.title}
+            errorMessage={errors.title?.message}
           />
-          <TextEditor label="Bio" />
+          <TextEditor
+            label="Bio"
+            onChange={(val) => setValue("bio", val)}
+            hasError={!!errors.bio}
+            errorMessage={errors.bio?.message}
+          />
         </div>
-      </Card>
-
-      <Card title="Social Networks">
-        {socialNetworks.map((socialNetwork, index) => (
-          // Social dropdown
-          <div key={index} className="space-y-3">
-            <div
-              onClick={() => toggleDropdown(index)}
-              className="flex w-full cursor-pointer items-center justify-between rounded-lg bg-muted p-5"
-            >
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => removeSocialNetwork(index)}
-                  type="button"
-                  className="text-destructive"
-                >
-                  <PiX />
-                </button>
-                <span className="text-sm font-semibold">
-                  Network {index + 1}
-                </span>
-              </div>
-
-              <PiCaretDown
-                className={`size-5 transition ${socialDropdownVisible[index] ? "rotate-180" : ""}`}
-              />
-            </div>
-            <div
-              className={`flex-col items-center gap-5 md:flex-row ${socialDropdownVisible[index] ? "flex" : "hidden"}`}
-            >
-              <SelectBox
-                label="Social"
-                options={["facebook", "twitter", "instagram", "linkedin"]}
-                defaultText="Select your social network"
-                value={index === 0 ? "facebook" : ""}
-              />
-              <FormField
-                label="url"
-                placeholder="Enter url"
-                id={`url-${index}`}
-              />
-            </div>
-          </div>
-        ))}
-
-        <Button
-          className="text-sm"
-          variant="secondary"
-          type="button"
-          onClick={addSocialNetwork}
-        >
-          Add another network
-        </Button>
       </Card>
 
       <Card title="My Resume">

@@ -24,12 +24,18 @@ type TextEditorProps = {
   label: string;
   isRequired?: boolean;
   placeholder?: string;
+  onChange: (value: string) => void;
+  hasError?: boolean;
+  errorMessage?: string;
 };
 
 const TextEditor = ({
   label,
   placeholder,
   isRequired = false,
+  hasError,
+  errorMessage,
+  onChange,
 }: TextEditorProps) => {
   return (
     <div className="space-y-1">
@@ -76,7 +82,10 @@ const TextEditor = ({
 
           placeholder,
         }}
+        onChange={(event, editor) => onChange(editor.getData())}
       />
+
+      {hasError && <p className="text-destructive">{errorMessage}</p>}
     </div>
   );
 };

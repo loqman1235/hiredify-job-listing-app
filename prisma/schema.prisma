@@ -37,6 +37,8 @@ model CandidateProfile {
   id          String        @id @default(auto()) @map("_id") @db.ObjectId
   candidateId String        @unique @db.ObjectId
   candidate   User?         @relation(fields: [candidateId], references: [id])
+  categoryId  String        @db.ObjectId
+  category    Category      @relation(fields: [categoryId], references: [id])
   fullname    String?
   dateOfBirth DateTime?
   gender      Gender?
@@ -45,6 +47,8 @@ model CandidateProfile {
   location    String?
   salary      Int?
   salaryType  SalaryType?
+  title       String?
+  bio         String?
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   application Application[]
@@ -105,11 +109,12 @@ model Application {
 }
 
 model Category {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  jobs      Job[]
+  id         String             @id @default(auto()) @map("_id") @db.ObjectId
+  name       String             @unique
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+  jobs       Job[]
+  candidates CandidateProfile[]
 
   @@map("categories")
 }
