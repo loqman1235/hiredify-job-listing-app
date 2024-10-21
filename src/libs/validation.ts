@@ -55,7 +55,7 @@ export const editCandidateProfileSchema = z.object({
           )
         );
       },
-      { message: "Invalid phone number" },
+      { message: "Enter a valid phone number" },
     ),
   address: z.string().trim().optional(),
   location: z.string().trim().optional(),
@@ -75,4 +75,48 @@ export const editCandidateProfileSchema = z.object({
 
 export type editCandidateProfileSchemaType = z.infer<
   typeof editCandidateProfileSchema
+>;
+
+export const editEmployerProfileSchema = z.object({
+  fullname: z
+    .string()
+    .trim()
+    .min(3, { message: "Fullname must be at least 3 characters" })
+    .optional(),
+  phoneNumber: z
+    .string()
+    .trim()
+    .refine(
+      (val) => {
+        return (
+          val !== undefined &&
+          /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/.test(
+            val,
+          )
+        );
+      },
+      { message: "Enter a valid phone number" },
+    )
+    .optional(),
+  website: z
+    .string()
+    .trim()
+    .refine(
+      (val) => {
+        val !== undefined && /(www|http:|https:)+[^\s]+[\w]/.test(val);
+      },
+      { message: "Enter a valid website" },
+    ),
+  companySize: z.coerce.number().nonnegative().optional(),
+  location: z.string().trim().optional(),
+  address: z.string().trim().optional(),
+  about: z
+    .string()
+    .trim()
+    .min(20, { message: "About must be at least 20 characters" })
+    .optional(),
+});
+
+export type editEmployerProfileSchemaType = z.infer<
+  typeof editEmployerProfileSchema
 >;

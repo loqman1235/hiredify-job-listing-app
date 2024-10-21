@@ -12,17 +12,16 @@ const Profile = async () => {
     },
   });
 
-  if (!candidateProfile) return null;
-
   return (
     <div>
       <h3 className="mb-5 text-2xl font-bold tracking-tight">Edit Profile</h3>
 
-      {user?.role === "CANDIDATE" ? (
+      {user?.role === "CANDIDATE" && candidateProfile && (
         <EditCandidateProfileForm candidateProfile={candidateProfile} />
-      ) : (
-        <EditEmployerProfileForm />
       )}
+
+      {/* TODO: Add employer profile validation and upsert logic */}
+      {user?.role === "EMPLOYER" && <EditEmployerProfileForm />}
     </div>
   );
 };

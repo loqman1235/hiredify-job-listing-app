@@ -2,7 +2,7 @@ import Card from "@/components/common/Card";
 import FormField from "@/components/common/FormField";
 import Image from "next/image";
 import { PiCamera } from "react-icons/pi";
-import TextEditor from "./TextEditor";
+// import TextEditor from "./TextEditor";
 import Button from "@/components/common/Button";
 
 const EditEmployerProfileForm = () => {
@@ -81,7 +81,7 @@ const EditEmployerProfileForm = () => {
           />
         </div>
 
-        <TextEditor label="About Company" />
+        {/* <TextEditor label="About Company" onChange={() => {}} /> */}
       </Card>
 
       <Button type="submit">Save</Button>
