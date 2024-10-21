@@ -3,6 +3,8 @@ import { Metadata } from "next";
 import Sidebar from "./(components)/Sidebar";
 import { validateRequest } from "@/auth";
 import { redirect } from "next/navigation";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "Hiredify | Dashboard",
@@ -25,6 +27,8 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
           {children}
         </div>
       </div>
+
+      <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
     </main>
   );
 };

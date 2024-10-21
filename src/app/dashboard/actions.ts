@@ -5,6 +5,8 @@ import prisma from "@/libs/prisma";
 import {
   editCandidateProfileSchema,
   editCandidateProfileSchemaType,
+  editEmployerProfileSchema,
+  editEmployerProfileSchemaType,
 } from "@/libs/validation";
 
 export const updateCandidateProfile = async (
@@ -60,6 +62,7 @@ export const updateCandidateProfile = async (
         title,
       },
       create: {
+        candidateId: user.id,
         address,
         bio,
         dateOfBirth: dob,
@@ -70,6 +73,70 @@ export const updateCandidateProfile = async (
         salary,
         salaryType,
         title,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return {
+      error: "Something went wrong",
+    };
+  }
+};
+
+export const updateEmployerProfile = async (
+  fields: editEmployerProfileSchemaType,
+): Promise<{ error: string } | void> => {
+  try {
+    const { session, user } = await validateRequest();
+
+    if (!session) {
+      throw new Error("Not Authorized");
+    }
+
+    if (user.role !== "EMPLOYER") {
+      throw new Error("Not Authorized");
+    }
+
+    const validatedFields = editEmployerProfileSchema.safeParse(fields);
+
+    if (!validatedFields.success) {
+      return {
+        error: validatedFields.error.message,
+      };
+    }
+
+    const {
+      website,
+      about,
+      address,
+      companySize,
+      fullname,
+      location,
+      phoneNumber,
+    } = validatedFields.data;
+
+    await prisma.employerProfile.upsert({
+      where: {
+        employerId: user?.id,
+      },
+      update: {
+        about,
+        address,
+        companySize,
+        fullname,
+        location,
+        phoneNumber,
+        website,
+      },
+      create: {
+        employerId: user.id,
+        about,
+        address,
+        companySize,
+        fullname,
+        location,
+        phoneNumber,
+        website,
       },
     });
   } catch (error) {

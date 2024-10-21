@@ -1,13 +1,63 @@
+"use client";
+
 import Card from "@/components/common/Card";
 import FormField from "@/components/common/FormField";
 import Image from "next/image";
 import { PiCamera } from "react-icons/pi";
-// import TextEditor from "./TextEditor";
+import TextEditor from "./TextEditor";
 import Button from "@/components/common/Button";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  editEmployerProfileSchema,
+  editEmployerProfileSchemaType,
+} from "@/libs/validation";
+import { useTransition } from "react";
+import { updateEmployerProfile } from "../actions";
+import { toast } from "react-toastify";
+import { EmployerProfile } from "@prisma/client";
 
-const EditEmployerProfileForm = () => {
+type EditCandidateProfileFormProps = {
+  employerProfile: EmployerProfile;
+};
+
+const EditEmployerProfileForm = ({
+  employerProfile,
+}: EditCandidateProfileFormProps) => {
+  const [isPending, startTranstion] = useTransition();
+
+  const {
+    register,
+    setValue,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<editEmployerProfileSchemaType>({
+    resolver: zodResolver(editEmployerProfileSchema),
+    defaultValues: {
+      about: employerProfile.about || undefined,
+      address: employerProfile.address || undefined,
+      companySize: employerProfile.companySize || undefined,
+      fullname: employerProfile.fullname || undefined,
+      location: employerProfile.location || undefined,
+      phoneNumber: employerProfile.phoneNumber || undefined,
+      website: employerProfile.website || undefined,
+    },
+  });
+
+  const onSubmit = async (values: editEmployerProfileSchemaType) => {
+    startTranstion(async () => {
+      const result = await updateEmployerProfile(values);
+
+      if (result?.error) {
+        toast.error(result.error);
+      } else {
+        toast.success("Profile has been updated");
+      }
+    });
+  };
+
   return (
-    <form className="space-y-5">
+    <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
       <Card title="My Profile">
         {/* PROFILE PICTURE */}
         <div className="relative h-[280px] w-full overflow-hidden rounded-md bg-muted md:h-40 md:w-40">
@@ -32,16 +82,20 @@ const EditEmployerProfileForm = () => {
             className="flex-1"
             label="Full name"
             id="fullname"
-            name="fullname"
             placeholder="Enter your fullname"
             isRequired
+            {...register("fullname")}
+            hasError={!!errors.fullname}
+            errorMessage={errors.fullname?.message}
           />
           <FormField
             className="flex-1"
             label="Phone Number"
             id="phoneNumber"
-            name="phoneNum"
             placeholder="Enter your phone number"
+            {...register("phoneNumber")}
+            hasError={!!errors.phoneNumber}
+            errorMessage={errors.phoneNumber?.message}
           />
         </div>
 
@@ -50,16 +104,20 @@ const EditEmployerProfileForm = () => {
             className="flex-1"
             label="Website"
             id="website"
-            name="website"
             placeholder="Enter your website"
+            {...register("website")}
+            hasError={!!errors.website}
+            errorMessage={errors.website?.message}
           />
           <FormField
             className="flex-1"
             label="Company size"
             id="companySize"
-            name="companySize"
             type="number"
             placeholder="Enter company size"
+            {...register("companySize")}
+            hasError={!!errors.companySize}
+            errorMessage={errors.companySize?.message}
           />
         </div>
 
@@ -68,23 +126,34 @@ const EditEmployerProfileForm = () => {
             className="flex-1"
             label="Location"
             id="location"
-            name="location"
             placeholder="Enter company's location"
+            {...register("location")}
+            hasError={!!errors.location}
+            errorMessage={errors.location?.message}
           />
           <FormField
             className="flex-1"
             label="Address"
             id="address"
-            name="address"
-            type="number"
             placeholder="Enter company's address"
+            {...register("address")}
+            hasError={!!errors.address}
+            errorMessage={errors.address?.message}
           />
         </div>
 
-        {/* <TextEditor label="About Company" onChange={() => {}} /> */}
+        <TextEditor
+          label="About Company"
+          onChange={(val) => setValue("about", val)}
+          hasError={!!errors.about}
+          errorMessage={errors.about?.message}
+          value={employerProfile.about || ""}
+        />
       </Card>
 
-      <Button type="submit">Save</Button>
+      <Button disabled={isPending} type="submit">
+        {isPending ? "Saving..." : "Save"}
+      </Button>
     </form>
   );
 };

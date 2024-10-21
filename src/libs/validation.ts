@@ -103,11 +103,19 @@ export const editEmployerProfileSchema = z.object({
     .trim()
     .refine(
       (val) => {
-        val !== undefined && /(www|http:|https:)+[^\s]+[\w]/.test(val);
+        return (
+          val !== undefined &&
+          /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(
+            val,
+          )
+        );
       },
-      { message: "Enter a valid website" },
+      { message: "Enter a valid website URL" },
     ),
-  companySize: z.coerce.number().nonnegative().optional(),
+  companySize: z.coerce
+    .number()
+    .nonnegative({ message: "Company size must be positive" })
+    .optional(),
   location: z.string().trim().optional(),
   address: z.string().trim().optional(),
   about: z

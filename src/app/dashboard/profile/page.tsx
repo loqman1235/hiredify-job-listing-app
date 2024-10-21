@@ -12,6 +12,12 @@ const Profile = async () => {
     },
   });
 
+  const employerProfile = await prisma.employerProfile.findUnique({
+    where: {
+      employerId: user?.id,
+    },
+  });
+
   return (
     <div>
       <h3 className="mb-5 text-2xl font-bold tracking-tight">Edit Profile</h3>
@@ -20,8 +26,9 @@ const Profile = async () => {
         <EditCandidateProfileForm candidateProfile={candidateProfile} />
       )}
 
-      {/* TODO: Add employer profile validation and upsert logic */}
-      {user?.role === "EMPLOYER" && <EditEmployerProfileForm />}
+      {user?.role === "EMPLOYER" && employerProfile && (
+        <EditEmployerProfileForm employerProfile={employerProfile} />
+      )}
     </div>
   );
 };

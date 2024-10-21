@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CandidateProfile, Gender, SalaryType } from "@prisma/client";
 import { updateCandidateProfile } from "../actions";
 import { useTransition } from "react";
+import { toast } from "react-toastify";
 // import { useFormStatus } from "react-dom";
 
 type EditCandidateProfileFormProps = {
@@ -26,8 +27,6 @@ const EditCandidateProfileForm = ({
   candidateProfile,
 }: EditCandidateProfileFormProps) => {
   const [isPending, startTranstion] = useTransition();
-
-  console.log("ISPENDING", isPending);
 
   const {
     register,
@@ -55,9 +54,9 @@ const EditCandidateProfileForm = ({
       const result = await updateCandidateProfile(values);
 
       if (result?.error) {
-        console.log(result.error);
+        toast.error(result.error);
       } else {
-        console.log("Profile updated successfully");
+        toast.success("Profile has been updated");
       }
     });
   };
