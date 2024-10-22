@@ -77,7 +77,26 @@ export type editCandidateProfileSchemaType = z.infer<
   typeof editCandidateProfileSchema
 >;
 
+const COMPANY_IMG_MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const COMPANY_IMG_ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
+
 export const editEmployerProfileSchema = z.object({
+  companyImage: z
+    .custom<File>((file) => file instanceof File, "Please upload a valid file")
+    .refine(
+      (file) => file.size <= COMPANY_IMG_MAX_FILE_SIZE,
+      `Max file size is 5MB.`,
+    )
+    .refine(
+      (file) => COMPANY_IMG_ACCEPTED_IMAGE_TYPES.includes(file.type),
+      "Only .jpg, .jpeg, .png and .webp formats are supported.",
+    )
+    .optional(),
   fullname: z
     .string()
     .trim()

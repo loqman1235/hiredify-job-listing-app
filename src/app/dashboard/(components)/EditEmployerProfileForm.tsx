@@ -12,18 +12,22 @@ import {
   editEmployerProfileSchema,
   editEmployerProfileSchemaType,
 } from "@/libs/validation";
-import { useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { updateEmployerProfile } from "../actions";
 import { toast } from "react-toastify";
 import { EmployerProfile } from "@prisma/client";
 
 type EditCandidateProfileFormProps = {
-  employerProfile: EmployerProfile;
+  employerProfile: EmployerProfile & {
+    companyImage: { url: string; publicId: string } | null;
+  };
 };
-
 const EditEmployerProfileForm = ({
   employerProfile,
 }: EditCandidateProfileFormProps) => {
+  const [companyImagePreview, setCompanyImagePreview] = useState<string>(
+    employerProfile.companyImage?.url || "",
+  );
   const [isPending, startTranstion] = useTransition();
 
   const {
@@ -46,7 +50,16 @@ const EditEmployerProfileForm = ({
 
   const onSubmit = async (values: editEmployerProfileSchemaType) => {
     startTranstion(async () => {
-      const result = await updateEmployerProfile(values);
+      const formData = new FormData();
+
+      Object.entries(values).forEach(([key, value]) => {
+        if (value) {
+          formData.append(key, value as string);
+        }
+      });
+
+      const result = await updateEmployerProfile(formData);
+      setValue("companyImage", undefined);
 
       if (result?.error) {
         toast.error(result.error);
@@ -56,25 +69,50 @@ const EditEmployerProfileForm = ({
     });
   };
 
+  useEffect(() => {
+    if (errors.companyImage) {
+      toast.error(errors.companyImage.message);
+    }
+  }, [errors.companyImage]);
+
   return (
     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
       <Card title="My Profile">
         {/* PROFILE PICTURE */}
-        <div className="relative h-[280px] w-full overflow-hidden rounded-md bg-muted md:h-40 md:w-40">
-          <Image
-            src="https://randomuser.me/api/portraits/men/1.jpg"
-            alt="profile picture"
-            fill
-            className="relative h-full w-full object-cover"
-          />
+        <div>
+          <span className="mb-2 flex items-center gap-1 text-sm font-medium capitalize">
+            Company Image
+          </span>
+          <div className="relative h-[280px] w-full overflow-hidden rounded-md bg-muted md:h-40 md:w-40">
+            <Image
+              src={
+                companyImagePreview ||
+                "https://randomuser.me/api/portraits/men/1.jpg"
+              }
+              alt="profile picture"
+              fill
+              className="relative h-full w-full object-cover"
+            />
 
-          <label
-            htmlFor="profileImg"
-            className="absolute right-2 top-2 flex cursor-pointer items-center justify-center rounded-full bg-muted p-1 text-primary shadow"
-          >
-            <input id="profileImg" type="file" className="hidden" />
-            <PiCamera className="size-5" />
-          </label>
+            <label
+              htmlFor="profileImg"
+              className="absolute right-2 top-2 flex cursor-pointer items-center justify-center rounded-full bg-muted p-1 text-primary shadow"
+            >
+              <input
+                id="profileImg"
+                type="file"
+                className="hidden"
+                onChange={(e) => {
+                  if (e.target.files) {
+                    const file = e.target.files[0];
+                    setCompanyImagePreview(URL.createObjectURL(file));
+                    setValue("companyImage", file);
+                  }
+                }}
+              />
+              <PiCamera className="size-5" />
+            </label>
+          </div>
         </div>
 
         <div className="flex w-full flex-col items-center gap-5 md:flex-row">

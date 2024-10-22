@@ -16,6 +16,9 @@ const Profile = async () => {
     where: {
       employerId: user?.id,
     },
+    include: {
+      companyImage: true,
+    },
   });
 
   return (

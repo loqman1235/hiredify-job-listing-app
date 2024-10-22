@@ -17,6 +17,7 @@
     "bcrypt": "^5.1.1",
     "chart.js": "^4.4.4",
     "ckeditor5": "^43.1.0",
+    "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
     "lucia": "^3.2.1",
     "mongodb": "^6.9.0",

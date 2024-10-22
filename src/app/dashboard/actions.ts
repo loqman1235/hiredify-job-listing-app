@@ -1,12 +1,12 @@
 "use server";
 
 import { validateRequest } from "@/auth";
+import cloudinary from "@/libs/cloudinary";
 import prisma from "@/libs/prisma";
 import {
   editCandidateProfileSchema,
   editCandidateProfileSchemaType,
   editEmployerProfileSchema,
-  editEmployerProfileSchemaType,
 } from "@/libs/validation";
 
 export const updateCandidateProfile = async (
@@ -84,7 +84,7 @@ export const updateCandidateProfile = async (
 };
 
 export const updateEmployerProfile = async (
-  fields: editEmployerProfileSchemaType,
+  formData: FormData,
 ): Promise<{ error: string } | void> => {
   try {
     const { session, user } = await validateRequest();
@@ -97,7 +97,8 @@ export const updateEmployerProfile = async (
       throw new Error("Not Authorized");
     }
 
-    const validatedFields = editEmployerProfileSchema.safeParse(fields);
+    const formObject = Object.fromEntries(formData.entries());
+    const validatedFields = editEmployerProfileSchema.safeParse(formObject);
 
     if (!validatedFields.success) {
       return {
@@ -109,34 +110,79 @@ export const updateEmployerProfile = async (
       website,
       about,
       address,
+      companyImage,
       companySize,
       fullname,
       location,
       phoneNumber,
     } = validatedFields.data;
 
+    let companyImageResult;
+
+    // Find existing employer profile
+    const employerProfile = await prisma.employerProfile.findUnique({
+      where: {
+        employerId: user.id,
+      },
+      include: {
+        companyImage: true,
+      },
+    });
+
+    // Delete existing image from Cloudinary if it exists
+    if (employerProfile?.companyImage?.publicId) {
+      await cloudinary.uploader.destroy(employerProfile.companyImage.publicId);
+    }
+
+    // Upload new image if provided
+    if (companyImage && companyImage instanceof File) {
+      const base64 = await convertIntoBase64(companyImage);
+      companyImageResult = await cloudinary.uploader.upload(base64, {
+        folder: "hiredify/companies-images",
+      });
+    }
+
+    // Delete existing company image if there was one
+    if (employerProfile?.companyImage) {
+      await prisma.companyImage.delete({
+        where: {
+          id: employerProfile.companyImage.id,
+        },
+      });
+    }
+
+    // Create base update/create object without image
+    const baseProfileData = {
+      about,
+      address,
+      companySize,
+      fullname,
+      location,
+      phoneNumber,
+      website,
+    };
+
+    // Add company image data if we have a new image
+    const profileData = companyImageResult
+      ? {
+          ...baseProfileData,
+          companyImage: {
+            create: {
+              publicId: companyImageResult.public_id,
+              url: companyImageResult.secure_url,
+            },
+          },
+        }
+      : baseProfileData;
+
     await prisma.employerProfile.upsert({
       where: {
-        employerId: user?.id,
-      },
-      update: {
-        about,
-        address,
-        companySize,
-        fullname,
-        location,
-        phoneNumber,
-        website,
-      },
-      create: {
         employerId: user.id,
-        about,
-        address,
-        companySize,
-        fullname,
-        location,
-        phoneNumber,
-        website,
+      },
+      update: profileData,
+      create: {
+        ...profileData,
+        employerId: user.id,
       },
     });
   } catch (error) {
@@ -146,3 +192,10 @@ export const updateEmployerProfile = async (
     };
   }
 };
+async function convertIntoBase64(file: File) {
+  const buffer = await file.arrayBuffer();
+  const base64 = Buffer.from(buffer).toString("base64");
+  const dataURI = `data:${file.type};base64,${base64}`;
+
+  return dataURI;
+}
