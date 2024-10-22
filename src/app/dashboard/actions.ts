@@ -129,25 +129,27 @@ export const updateEmployerProfile = async (
       },
     });
 
-    // Delete existing image from Cloudinary if it exists
-    if (employerProfile?.companyImage?.publicId) {
-      await cloudinary.uploader.destroy(employerProfile.companyImage.publicId);
-    }
-
     // Upload new image if provided
     if (companyImage && companyImage instanceof File) {
+      // Delete existing image from Cloudinary if it exists
+      if (employerProfile?.companyImage?.publicId) {
+        await cloudinary.uploader.destroy(
+          employerProfile.companyImage.publicId,
+        );
+
+        // Delete existing company image if there was one
+        if (employerProfile?.companyImage) {
+          await prisma.companyImage.delete({
+            where: {
+              id: employerProfile.companyImage.id,
+            },
+          });
+        }
+      }
+
       const base64 = await convertIntoBase64(companyImage);
       companyImageResult = await cloudinary.uploader.upload(base64, {
         folder: "hiredify/companies-images",
-      });
-    }
-
-    // Delete existing company image if there was one
-    if (employerProfile?.companyImage) {
-      await prisma.companyImage.delete({
-        where: {
-          id: employerProfile.companyImage.id,
-        },
       });
     }
 
