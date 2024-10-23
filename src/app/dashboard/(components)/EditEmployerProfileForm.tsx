@@ -15,16 +15,24 @@ import {
 import { useEffect, useState, useTransition } from "react";
 import { updateEmployerProfile } from "../actions";
 import { toast } from "react-toastify";
-import { EmployerProfile } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
-type EditCandidateProfileFormProps = {
-  employerProfile: EmployerProfile & {
-    companyImage: { url: string; publicId: string } | null;
+type EmployerWithImage = Prisma.EmployerProfileGetPayload<{
+  include: {
+    companyImage: {
+      select: {
+        url: true;
+      };
+    };
   };
+}>;
+
+type EditEmployerProfileFormProps = {
+  employerProfile: EmployerWithImage;
 };
 const EditEmployerProfileForm = ({
   employerProfile,
-}: EditCandidateProfileFormProps) => {
+}: EditEmployerProfileFormProps) => {
   const [companyImagePreview, setCompanyImagePreview] = useState<string>(
     employerProfile.companyImage?.url || "",
   );

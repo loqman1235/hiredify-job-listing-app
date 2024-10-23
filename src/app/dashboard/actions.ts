@@ -5,12 +5,12 @@ import cloudinary from "@/libs/cloudinary";
 import prisma from "@/libs/prisma";
 import {
   editCandidateProfileSchema,
-  editCandidateProfileSchemaType,
   editEmployerProfileSchema,
 } from "@/libs/validation";
+import { revalidatePath } from "next/cache";
 
 export const updateCandidateProfile = async (
-  fields: editCandidateProfileSchemaType,
+  formData: FormData,
 ): Promise<{ error: string } | void> => {
   try {
     const { session, user } = await validateRequest();
@@ -23,7 +23,8 @@ export const updateCandidateProfile = async (
       throw new Error("Not Authorized");
     }
 
-    const validatedFields = editCandidateProfileSchema.safeParse(fields);
+    const formObject = Object.fromEntries(formData.entries());
+    const validatedFields = editCandidateProfileSchema.safeParse(formObject);
 
     if (!validatedFields.success) {
       return {
@@ -32,6 +33,7 @@ export const updateCandidateProfile = async (
     }
 
     const {
+      avatar,
       address,
       bio,
       //   category,
@@ -44,6 +46,42 @@ export const updateCandidateProfile = async (
       salaryType,
       title,
     } = validatedFields.data;
+
+    let avatarResult;
+
+    if (avatar && avatar instanceof File) {
+      // Delete existing avatar from Cloudinary if it exists
+      const existingAvatar = await prisma.avatar.findUnique({
+        where: {
+          userId: user.id,
+        },
+      });
+
+      if (existingAvatar) {
+        await removeAvatarFromCloudinary(existingAvatar.publicId);
+      }
+
+      avatarResult = await uploadAvatarToCloudinary(user.id, avatar);
+
+      if ("error" in avatarResult) {
+        return { error: avatarResult.error };
+      }
+
+      await prisma.avatar.upsert({
+        where: {
+          userId: user.id,
+        },
+        update: {
+          publicId: avatarResult.publicId,
+          url: avatarResult.url,
+        },
+        create: {
+          publicId: avatarResult.publicId,
+          url: avatarResult.url,
+          userId: user.id,
+        },
+      });
+    }
 
     await prisma.candidateProfile.upsert({
       where: {
@@ -62,9 +100,9 @@ export const updateCandidateProfile = async (
         title,
       },
       create: {
-        candidateId: user.id,
         address,
         bio,
+        candidateId: user.id,
         dateOfBirth: dob,
         fullname,
         gender,
@@ -75,6 +113,8 @@ export const updateCandidateProfile = async (
         title,
       },
     });
+
+    revalidatePath("/dashboard/profile");
   } catch (error) {
     console.log(error);
     return {
@@ -200,4 +240,39 @@ async function convertIntoBase64(file: File) {
   const dataURI = `data:${file.type};base64,${base64}`;
 
   return dataURI;
+}
+
+async function uploadAvatarToCloudinary(
+  userId: string,
+  file: File,
+): Promise<
+  | {
+      error: string;
+    }
+  | {
+      publicId: string;
+      url: string;
+    }
+> {
+  try {
+    const base64 = await convertIntoBase64(file);
+
+    const result = await cloudinary.uploader.upload(base64, {
+      folder: "hiredify/avatars",
+    });
+
+    return {
+      publicId: result.public_id,
+      url: result.secure_url,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      error: "Something went wrong",
+    };
+  }
+}
+
+async function removeAvatarFromCloudinary(publicId: string) {
+  await cloudinary.uploader.destroy(publicId);
 }

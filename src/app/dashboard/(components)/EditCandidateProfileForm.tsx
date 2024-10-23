@@ -13,19 +13,32 @@ import {
   editCandidateProfileSchemaType,
 } from "@/libs/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CandidateProfile, Gender, SalaryType } from "@prisma/client";
+import { Gender, Prisma, SalaryType } from "@prisma/client";
 import { updateCandidateProfile } from "../actions";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "react-toastify";
 // import { useFormStatus } from "react-dom";
 
+type CandidateWithAvatar = Prisma.CandidateProfileGetPayload<{
+  include: {
+    candidate: {
+      select: {
+        avatar: true;
+      };
+    };
+  };
+}>;
+
 type EditCandidateProfileFormProps = {
-  candidateProfile: CandidateProfile;
+  candidateProfile: CandidateWithAvatar;
 };
 
 const EditCandidateProfileForm = ({
   candidateProfile,
 }: EditCandidateProfileFormProps) => {
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(
+    candidateProfile.candidate?.avatar?.url || null,
+  );
   const [isPending, startTranstion] = useTransition();
 
   const {
@@ -49,9 +62,29 @@ const EditCandidateProfileForm = ({
     },
   });
 
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setAvatarPreview(URL.createObjectURL(file));
+      setValue("avatar", file);
+    }
+  };
+
   const onSubmit = async (values: editCandidateProfileSchemaType) => {
     startTranstion(async () => {
-      const result = await updateCandidateProfile(values);
+      const formData = new FormData();
+
+      Object.entries(values).forEach(([key, value]) => {
+        if (value !== undefined) {
+          formData.append(key, value as string);
+
+          if (key === "avatar") {
+            formData.append(key, value as File);
+          }
+        }
+      });
+
+      const result = await updateCandidateProfile(formData);
 
       if (result?.error) {
         toast.error(result.error);
@@ -65,21 +98,31 @@ const EditCandidateProfileForm = ({
     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
       <Card title="My Profile">
         {/* PROFILE PICTURE */}
-        <div className="relative h-[280px] w-full overflow-hidden rounded-md bg-muted md:h-40 md:w-40">
-          <Image
-            src="https://randomuser.me/api/portraits/men/1.jpg"
-            alt="profile picture"
-            fill
-            className="relative h-full w-full object-cover"
-          />
+        <div className="flex flex-col gap-2">
+          <span className="select-none text-sm font-medium">Avatar</span>
+          <div className="relative h-[280px] w-full overflow-hidden rounded-md bg-muted md:h-40 md:w-40">
+            <Image
+              src={
+                avatarPreview || "https://randomuser.me/api/portraits/men/1.jpg"
+              }
+              alt="profile picture"
+              fill
+              className="relative h-full w-full object-cover"
+            />
 
-          <label
-            htmlFor="profileImg"
-            className="absolute right-2 top-2 flex cursor-pointer items-center justify-center rounded-full bg-muted p-1 text-primary shadow"
-          >
-            <input id="profileImg" type="file" className="hidden" />
-            <PiCamera className="size-5" />
-          </label>
+            <label
+              htmlFor="profileImg"
+              className="absolute right-2 top-2 flex cursor-pointer items-center justify-center rounded-full bg-muted p-1 text-primary shadow"
+            >
+              <input
+                id="profileImg"
+                type="file"
+                className="hidden"
+                onChange={handleAvatarChange}
+              />
+              <PiCamera className="size-5" />
+            </label>
+          </div>
         </div>
 
         <div className="flex w-full flex-col items-center gap-5 md:flex-row">

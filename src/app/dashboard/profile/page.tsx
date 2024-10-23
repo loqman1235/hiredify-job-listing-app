@@ -10,7 +10,16 @@ const Profile = async () => {
     where: {
       candidateId: user?.id,
     },
+    include: {
+      candidate: {
+        select: {
+          avatar: true,
+        },
+      },
+    },
   });
+
+  console.log(candidateProfile);
 
   const employerProfile = await prisma.employerProfile.findUnique({
     where: {

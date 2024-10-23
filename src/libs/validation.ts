@@ -35,6 +35,9 @@ export type loginSchemaType = z.infer<typeof loginSchema>;
 // Edit candidate profile schema
 
 export const editCandidateProfileSchema = z.object({
+  avatar: z
+    .custom<File>((file) => file instanceof File, "Please upload a valid file")
+    .optional(),
   fullname: z
     .string()
     .trim()
