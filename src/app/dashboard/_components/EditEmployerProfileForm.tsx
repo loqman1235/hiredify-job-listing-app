@@ -17,24 +17,24 @@ import { updateEmployerProfile } from "../actions";
 import { toast } from "react-toastify";
 import { Prisma } from "@prisma/client";
 
-type EmployerWithImage = Prisma.EmployerProfileGetPayload<{
+type EmployerWithAvatar = Prisma.EmployerProfileGetPayload<{
   include: {
-    companyImage: {
+    employer: {
       select: {
-        url: true;
+        avatar: true;
       };
     };
   };
 }>;
 
 type EditEmployerProfileFormProps = {
-  employerProfile: EmployerWithImage;
+  employerProfile: EmployerWithAvatar;
 };
 const EditEmployerProfileForm = ({
   employerProfile,
 }: EditEmployerProfileFormProps) => {
-  const [companyImagePreview, setCompanyImagePreview] = useState<string>(
-    employerProfile.companyImage?.url || "",
+  const [avatarPreview, setAvatarPreview] = useState<string>(
+    employerProfile.employer?.avatar?.url || "",
   );
   const [isPending, startTranstion] = useTransition();
 
@@ -56,18 +56,30 @@ const EditEmployerProfileForm = ({
     },
   });
 
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setAvatarPreview(URL.createObjectURL(file));
+      setValue("avatar", file);
+    }
+  };
+
   const onSubmit = async (values: editEmployerProfileSchemaType) => {
     startTranstion(async () => {
       const formData = new FormData();
 
       Object.entries(values).forEach(([key, value]) => {
-        if (value) {
+        if (value !== undefined) {
           formData.append(key, value as string);
+
+          if (key === "avatar") {
+            formData.append(key, value as File);
+          }
         }
       });
 
       const result = await updateEmployerProfile(formData);
-      setValue("companyImage", undefined);
+      setValue("avatar", undefined);
 
       if (result?.error) {
         toast.error(result.error);
@@ -78,10 +90,10 @@ const EditEmployerProfileForm = ({
   };
 
   useEffect(() => {
-    if (errors.companyImage) {
-      toast.error(errors.companyImage.message);
+    if (errors.avatar) {
+      toast.error(errors.avatar.message);
     }
-  }, [errors.companyImage]);
+  }, [errors.avatar]);
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
@@ -94,8 +106,7 @@ const EditEmployerProfileForm = ({
           <div className="relative h-[280px] w-full overflow-hidden rounded-md bg-muted md:h-40 md:w-40">
             <Image
               src={
-                companyImagePreview ||
-                "https://randomuser.me/api/portraits/men/1.jpg"
+                avatarPreview || "https://randomuser.me/api/portraits/men/1.jpg"
               }
               alt="profile picture"
               fill
@@ -110,13 +121,7 @@ const EditEmployerProfileForm = ({
                 id="profileImg"
                 type="file"
                 className="hidden"
-                onChange={(e) => {
-                  if (e.target.files) {
-                    const file = e.target.files[0];
-                    setCompanyImagePreview(URL.createObjectURL(file));
-                    setValue("companyImage", file);
-                  }
-                }}
+                onChange={handleAvatarChange}
               />
               <PiCamera className="size-5" />
             </label>

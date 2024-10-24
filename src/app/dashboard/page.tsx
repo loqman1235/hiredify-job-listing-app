@@ -4,11 +4,11 @@ import {
   PiChatCircleDots,
   PiEye,
 } from "react-icons/pi";
-import StatCard from "./(components)/StatCard";
+import StatCard from "./_components/StatCard";
 import JobCard from "@/components/sections/JobCard";
 import netflixLogoImg from "@/assets/images/logos/netflix.svg";
-import ProfileViewsChart from "./(components)/ProfileViewsChart";
-import ApplicationProgressChart from "./(components)/ApplicationProgressChart";
+import ProfileViewsChart from "./_components/ProfileViewsChart";
+import ApplicationProgressChart from "./_components/ApplicationProgressChart";
 
 const statsCards = [
   {

@@ -7,10 +7,13 @@ import { usePathname } from "next/navigation";
 import UserAvatar from "../common/UserAvatar";
 import { PiBell, PiChatCircleDots } from "react-icons/pi";
 import { useSession } from "@/context/SessionProvider";
-
 const Navbar = () => {
-  const { session } = useSession();
+  const { session, user } = useSession();
   const pathname = usePathname();
+
+  if (!user) return null;
+
+  console.log(user);
 
   return (
     <div
@@ -41,10 +44,7 @@ const Navbar = () => {
               <PiBell className="size-6 text-[var(--text-icon)] transition hover:text-text-primary" />
               <span className="absolute right-0 top-0 rounded-full border border-background bg-primary p-1 text-xs"></span>
             </button>
-            <UserAvatar
-              className="h-10 w-10"
-              avatarUrl="https://randomuser.me/api/portraits/men/1.jpg"
-            />
+            <UserAvatar className="h-10 w-10" avatarUrl={user?.avatar?.url} />
           </div>
         )}
       </div>

@@ -1,6 +1,6 @@
 import { validateRequest } from "@/auth";
 import { redirect } from "next/navigation";
-import CreateJobForm from "../(components)/CreateJobForm";
+import CreateJobForm from "../_components/CreateJobForm";
 
 const CreateJobPage = async () => {
   const { user } = await validateRequest();

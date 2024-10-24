@@ -1,6 +1,6 @@
 import { validateRequest } from "@/auth";
-import EditCandidateProfileForm from "../(components)/EditCandidateProfileForm";
-import EditEmployerProfileForm from "../(components)/EditEmployerProfileForm";
+import EditCandidateProfileForm from "../_components/EditCandidateProfileForm";
+import EditEmployerProfileForm from "../_components/EditEmployerProfileForm";
 import prisma from "@/libs/prisma";
 
 const Profile = async () => {
@@ -26,7 +26,11 @@ const Profile = async () => {
       employerId: user?.id,
     },
     include: {
-      companyImage: true,
+      employer: {
+        select: {
+          avatar: true,
+        },
+      },
     },
   });
 

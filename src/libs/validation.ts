@@ -89,7 +89,7 @@ const COMPANY_IMG_ACCEPTED_IMAGE_TYPES = [
 ];
 
 export const editEmployerProfileSchema = z.object({
-  companyImage: z
+  avatar: z
     .custom<File>((file) => file instanceof File, "Please upload a valid file")
     .refine(
       (file) => file.size <= COMPANY_IMG_MAX_FILE_SIZE,

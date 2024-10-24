@@ -7,7 +7,7 @@ import { cn } from "@/libs/utils";
 import { Dropdown, DropdownItem } from "./Dropdown";
 import { PiBookmarkSimple, PiGauge, PiMegaphone, PiUser } from "react-icons/pi";
 import Link from "next/link";
-import LogoutBtn from "@/app/dashboard/(components)/LogoutBtn";
+import LogoutBtn from "@/app/dashboard/_components/LogoutBtn";
 
 type UserAvatarProps = {
   avatarUrl?: string;

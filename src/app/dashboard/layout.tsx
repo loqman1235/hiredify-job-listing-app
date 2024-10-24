@@ -1,6 +1,6 @@
 import Navbar from "@/components/hero/Navbar";
 import { Metadata } from "next";
-import Sidebar from "./(components)/Sidebar";
+import Sidebar from "./_components/Sidebar";
 import { validateRequest } from "@/auth";
 import { redirect } from "next/navigation";
 import { ToastContainer } from "react-toastify";

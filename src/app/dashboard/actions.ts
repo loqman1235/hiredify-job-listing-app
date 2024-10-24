@@ -19,6 +19,10 @@ export const updateCandidateProfile = async (
       throw new Error("Not Authorized");
     }
 
+    if (user === null) {
+      throw new Error("Not Authorized");
+    }
+
     if (user.role !== "CANDIDATE") {
       throw new Error("Not Authorized");
     }
@@ -133,6 +137,10 @@ export const updateEmployerProfile = async (
       throw new Error("Not Authorized");
     }
 
+    if (user === null) {
+      throw new Error("Not Authorized");
+    }
+
     if (user.role !== "EMPLOYER") {
       throw new Error("Not Authorized");
     }
@@ -147,86 +155,78 @@ export const updateEmployerProfile = async (
     }
 
     const {
+      avatar,
       website,
       about,
       address,
-      companyImage,
       companySize,
       fullname,
       location,
       phoneNumber,
     } = validatedFields.data;
 
-    let companyImageResult;
+    let avatarResult;
 
-    // Find existing employer profile
-    const employerProfile = await prisma.employerProfile.findUnique({
-      where: {
-        employerId: user.id,
-      },
-      include: {
-        companyImage: true,
-      },
-    });
+    if (avatar && avatar instanceof File) {
+      // Delete existing avatar from Cloudinary if it exists
+      const existingAvatar = await prisma.avatar.findUnique({
+        where: {
+          userId: user.id,
+        },
+      });
 
-    // Upload new image if provided
-    if (companyImage && companyImage instanceof File) {
-      // Delete existing image from Cloudinary if it exists
-      if (employerProfile?.companyImage?.publicId) {
-        await cloudinary.uploader.destroy(
-          employerProfile.companyImage.publicId,
-        );
-
-        // Delete existing company image if there was one
-        if (employerProfile?.companyImage) {
-          await prisma.companyImage.delete({
-            where: {
-              id: employerProfile.companyImage.id,
-            },
-          });
-        }
+      if (existingAvatar) {
+        await removeAvatarFromCloudinary(existingAvatar.publicId);
       }
 
-      const base64 = await convertIntoBase64(companyImage);
-      companyImageResult = await cloudinary.uploader.upload(base64, {
-        folder: "hiredify/companies-images",
+      avatarResult = await uploadAvatarToCloudinary(user.id, avatar);
+
+      if ("error" in avatarResult) {
+        return { error: avatarResult.error };
+      }
+
+      await prisma.avatar.upsert({
+        where: {
+          userId: user.id,
+        },
+        update: {
+          publicId: avatarResult.publicId,
+          url: avatarResult.url,
+        },
+        create: {
+          publicId: avatarResult.publicId,
+          url: avatarResult.url,
+          userId: user.id,
+        },
       });
     }
-
-    // Create base update/create object without image
-    const baseProfileData = {
-      about,
-      address,
-      companySize,
-      fullname,
-      location,
-      phoneNumber,
-      website,
-    };
-
-    // Add company image data if we have a new image
-    const profileData = companyImageResult
-      ? {
-          ...baseProfileData,
-          companyImage: {
-            create: {
-              publicId: companyImageResult.public_id,
-              url: companyImageResult.secure_url,
-            },
-          },
-        }
-      : baseProfileData;
 
     await prisma.employerProfile.upsert({
       where: {
         employerId: user.id,
       },
-      update: profileData,
+      update: {
+        website,
+        about,
+        address,
+        companySize,
+        fullname,
+        location,
+        phoneNumber,
+      },
       create: {
-        ...profileData,
         employerId: user.id,
+        website,
+        about,
+        address,
+        companySize,
+        fullname,
+        location,
+        phoneNumber,
       },
     });
+
+    revalidatePath("/dashboard/profile");
   } catch (error) {
     console.log(error);
     return {
