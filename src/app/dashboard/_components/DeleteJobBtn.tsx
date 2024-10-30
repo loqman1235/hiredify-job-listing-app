@@ -1,5 +1,5 @@
+"use client";
 import Button from "@/components/common/Button";
-import { PiTrash } from "react-icons/pi";
 import { deleteJob } from "../actions";
 
 type DeleteJobBtnProps = {
@@ -8,16 +8,15 @@ type DeleteJobBtnProps = {
 
 const DeleteJobBtn = ({ jobId }: DeleteJobBtnProps) => {
   return (
-    <form
-      action={async () => {
-        "use server";
+    <Button
+      onClick={async () => {
         await deleteJob(jobId);
       }}
+      variant="destructive"
+      className="px-3 py-1.5"
     >
-      <Button variant="destructive" className="px-1.5 py-1.5">
-        <PiTrash className="size-4" />
-      </Button>
-    </form>
+      Yes
+    </Button>
   );
 };
 

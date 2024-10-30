@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/common/Table";
-import { PiPencilSimpleLine } from "react-icons/pi";
+import { PiPencilSimpleLine, PiTrash } from "react-icons/pi";
 // import { postedJobsData } from "@/data";
 import Link from "next/link";
 import Badge from "@/components/common/Badge";
@@ -17,6 +17,16 @@ import { redirect } from "next/navigation";
 import { validateRequest } from "@/auth";
 import { dateFormatter } from "@/libs/utils";
 import DeleteJobBtn from "../_components/DeleteJobBtn";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const JobsPage = async () => {
   const { user } = await validateRequest();
@@ -55,11 +65,19 @@ const JobsPage = async () => {
             </TableRow>
           </TableHead>
           <TableBody>
+            {jobs.length === 0 && (
+              <TableRow>
+                <TableData colSpan={6} className="text-center">
+                  No jobs found
+                </TableData>
+              </TableRow>
+            )}
+
             {jobs.map((job) => (
               <TableRow key={job.id}>
                 <TableData>
                   <Link
-                    href="/"
+                    href={`/dashboard/jobs/${job.id}`}
                     className="text-base font-semibold text-text-primary transition hover:text-primary"
                   >
                     {job.title}
@@ -83,7 +101,26 @@ const JobsPage = async () => {
 
                 <TableData className="flex min-h-[80px] items-center">
                   <div className="flex items-center gap-2">
-                    <DeleteJobBtn jobId={job.id} />
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="destructive" className="px-1.5 py-1.5">
+                          <PiTrash className="size-4" />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Are you sure you want to delete this job?
+                          </AlertDialogTitle>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>No</AlertDialogCancel>
+                          <AlertDialogAction asChild>
+                            <DeleteJobBtn jobId={job.id} />
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                     <Button variant="secondary" className="px-1.5 py-1.5">
                       <PiPencilSimpleLine className="size-4" />
                     </Button>
