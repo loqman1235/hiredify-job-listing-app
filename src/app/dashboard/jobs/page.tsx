@@ -9,11 +9,30 @@ import {
   TableRow,
 } from "@/components/common/Table";
 import { PiPencilSimpleLine, PiX } from "react-icons/pi";
-import { postedJobsData } from "@/data";
+// import { postedJobsData } from "@/data";
 import Link from "next/link";
 import Badge from "@/components/common/Badge";
+import prisma from "@/libs/prisma";
+import { redirect } from "next/navigation";
+import { validateRequest } from "@/auth";
+import { dateFormatter } from "@/libs/utils";
 
-const JobsPage = () => {
+const JobsPage = async () => {
+  const { user } = await validateRequest();
+
+  if (user?.role !== "EMPLOYER") {
+    return redirect("/dashboard");
+  }
+
+  const jobs = await prisma.job.findMany({
+    where: {
+      employerId: user.id,
+    },
+    include: {
+      applications: true,
+    },
+  });
+
   return (
     <div>
       <h3 className="mb-5 text-2xl font-bold tracking-tight">Manage Jobs</h3>
@@ -31,8 +50,8 @@ const JobsPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {postedJobsData.map((job, i) => (
-              <TableRow key={job.title + "-" + i}>
+            {jobs.map((job) => (
+              <TableRow key={job.id}>
                 <TableData>
                   <Link
                     href="/"
@@ -41,15 +60,13 @@ const JobsPage = () => {
                     {job.title}
                   </Link>
                 </TableData>
-                <TableData className="text-success">
-                  {job.numOfApplicants}
-                </TableData>
-                <TableData>{job.createdAt}</TableData>
+                <TableData className="text-success">0</TableData>
+                <TableData>{dateFormatter(job.createdAt)}</TableData>
                 <TableData className="text-destructive">
-                  {job.expiresAt}
+                  {job.expiresAt ? dateFormatter(job.expiresAt) : "N/A"}
                 </TableData>
                 <TableData>
-                  <Badge text={job.status} variant="success" />
+                  <Badge text="Active" variant="success" />
                 </TableData>
 
                 <TableData className="flex min-h-[80px] items-center">

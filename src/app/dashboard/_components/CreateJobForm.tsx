@@ -50,12 +50,11 @@ const CreateJobForm = ({ categories }: CreateJobFormProps) => {
     resolver: zodResolver(createJobSchema),
   });
 
-  console.log(errors);
-
   const onSubmit = (values: createJobSchemaType) => {
     startTranstion(async () => {
       const result = await createJob(values);
       setValue("jobDesc", "");
+      setValue("category", "");
       reset();
       if (result?.error) {
         toast.error(result.error);
@@ -164,6 +163,16 @@ const CreateJobForm = ({ categories }: CreateJobFormProps) => {
             {...register("address")}
             hasError={!!errors.address}
             errorMessage={errors.address?.message}
+          />
+
+          <FormField
+            label="Expires At"
+            id="expiresAt"
+            placeholder="Enter job expires at"
+            type="date"
+            {...register("expiresAt")}
+            hasError={!!errors.expiresAt}
+            errorMessage={errors.expiresAt?.message}
           />
         </div>
         <Button isLoading={isPending} type="submit">

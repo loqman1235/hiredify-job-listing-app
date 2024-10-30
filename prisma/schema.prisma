@@ -98,6 +98,8 @@ model Job {
   maxSalary    Int
   location     String
   address      String?
+  expiresAt    DateTime?
+  status       JobStatus        @default(DRAFT)
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
   applications Application[]
@@ -159,4 +161,10 @@ enum ApplicationStatus {
   PENDING
   ACCEPTED
   REJECTED
+}
+
+enum JobStatus {
+  PUBLISHED
+  DRAFT
+  EXPIRED
 }
