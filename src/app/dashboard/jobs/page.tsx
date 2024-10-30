@@ -29,7 +29,11 @@ const JobsPage = async () => {
       employerId: user.id,
     },
     include: {
-      applications: true,
+      applications: {
+        include: {
+          candidate: true,
+        },
+      },
     },
   });
 
@@ -60,13 +64,20 @@ const JobsPage = async () => {
                     {job.title}
                   </Link>
                 </TableData>
-                <TableData className="text-success">0</TableData>
+                <TableData className="text-success">
+                  {job.applications.length}
+                </TableData>
                 <TableData>{dateFormatter(job.createdAt)}</TableData>
                 <TableData className="text-destructive">
                   {job.expiresAt ? dateFormatter(job.expiresAt) : "N/A"}
                 </TableData>
                 <TableData>
-                  <Badge text="Active" variant="success" />
+                  <Badge
+                    text={job.status}
+                    variant={
+                      job.status === "PUBLISHED" ? "success" : "destructive"
+                    }
+                  />
                 </TableData>
 
                 <TableData className="flex min-h-[80px] items-center">

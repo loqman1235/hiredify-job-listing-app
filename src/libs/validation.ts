@@ -157,8 +157,8 @@ export const createJobSchema = z.object({
   }),
   jobDesc: z.string().trim().min(1, { message: "Job description is required" }),
   category: requiredField("category"),
-  jobType: z.nativeEnum(JobType),
-  salaryType: z.nativeEnum(SalaryType),
+  jobType: z.nativeEnum(JobType, { message: "Job type is required" }),
+  salaryType: z.nativeEnum(SalaryType, { message: "Salary type is required" }),
   minSalary: z.coerce
     .number()
     .nonnegative("Minimum salary must be positive")
@@ -169,7 +169,7 @@ export const createJobSchema = z.object({
     .min(1, { message: "Maximum salary is required" }),
   location: requiredField("location"),
   address: z.string().trim().optional(),
-  expiresAt: z.date().optional(),
+  expiresAt: z.date({ message: "Expires at is required" }).optional(),
 });
 
 export type createJobSchemaType = z.infer<typeof createJobSchema>;
