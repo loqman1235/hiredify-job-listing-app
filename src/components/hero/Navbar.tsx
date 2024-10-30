@@ -11,10 +11,6 @@ const Navbar = () => {
   const { session, user } = useSession();
   const pathname = usePathname();
 
-  if (!user) return null;
-
-  console.log(user);
-
   return (
     <div
       className={`relative z-40 h-[var(--navbar-height)] w-full ${pathname.startsWith("/dashboard") && "sticky top-0 bg-foreground shadow-sm"}`}
