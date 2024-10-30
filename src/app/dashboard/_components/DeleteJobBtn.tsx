@@ -1,5 +1,5 @@
 import Button from "@/components/common/Button";
-import { PiX } from "react-icons/pi";
+import { PiTrash } from "react-icons/pi";
 import { deleteJob } from "../actions";
 
 type DeleteJobBtnProps = {
@@ -15,7 +15,7 @@ const DeleteJobBtn = ({ jobId }: DeleteJobBtnProps) => {
       }}
     >
       <Button variant="destructive" className="px-1.5 py-1.5">
-        <PiX className="size-4" />
+        <PiTrash className="size-4" />
       </Button>
     </form>
   );
