@@ -4,6 +4,8 @@ import { validateRequest } from "@/auth";
 import cloudinary from "@/libs/cloudinary";
 import prisma from "@/libs/prisma";
 import {
+  createJobSchema,
+  createJobSchemaType,
   editCandidateProfileSchema,
   editEmployerProfileSchema,
 } from "@/libs/validation";
@@ -234,6 +236,68 @@ export const updateEmployerProfile = async (
     };
   }
 };
+
+export const createJob = async (
+  values: createJobSchemaType,
+): Promise<{ error: string } | void> => {
+  try {
+    const { session, user } = await validateRequest();
+
+    if (!session) {
+      throw new Error("Not Authorized");
+    }
+
+    if (user === null) {
+      throw new Error("Not Authorized");
+    }
+
+    if (user.role !== "EMPLOYER") {
+      throw new Error("Not Authorized");
+    }
+
+    const validatedFields = createJobSchema.safeParse(values);
+
+    if (!validatedFields.success) {
+      return {
+        error: validatedFields.error.message,
+      };
+    }
+
+    const {
+      category,
+      jobDesc,
+      jobType,
+      location,
+      maxSalary,
+      minSalary,
+      salaryType,
+      title,
+      address,
+    } = validatedFields.data;
+
+    await prisma.job.create({
+      data: {
+        categoryId: category,
+        description: jobDesc,
+        location,
+        maxSalary,
+        minSalary,
+        salaryType,
+        title,
+        type: jobType,
+        address,
+        employerId: user.id,
+      },
+    });
+    revalidatePath("/dashboard/jobs");
+  } catch (error) {
+    console.log(error);
+    return {
+      error: "Something went wrong",
+    };
+  }
+};
+
 async function convertIntoBase64(file: File) {
   const buffer = await file.arrayBuffer();
   const base64 = Buffer.from(buffer).toString("base64");

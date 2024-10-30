@@ -28,13 +28,13 @@ type EmployerWithAvatar = Prisma.EmployerProfileGetPayload<{
 }>;
 
 type EditEmployerProfileFormProps = {
-  employerProfile: EmployerWithAvatar;
+  employerProfile: EmployerWithAvatar | null;
 };
 const EditEmployerProfileForm = ({
   employerProfile,
 }: EditEmployerProfileFormProps) => {
   const [avatarPreview, setAvatarPreview] = useState<string>(
-    employerProfile.employer?.avatar?.url || "",
+    employerProfile?.employer?.avatar?.url || "",
   );
   const [isPending, startTranstion] = useTransition();
 
@@ -46,13 +46,13 @@ const EditEmployerProfileForm = ({
   } = useForm<editEmployerProfileSchemaType>({
     resolver: zodResolver(editEmployerProfileSchema),
     defaultValues: {
-      about: employerProfile.about || undefined,
-      address: employerProfile.address || undefined,
-      companySize: employerProfile.companySize || undefined,
-      fullname: employerProfile.fullname || undefined,
-      location: employerProfile.location || undefined,
-      phoneNumber: employerProfile.phoneNumber || undefined,
-      website: employerProfile.website || undefined,
+      about: employerProfile?.about || undefined,
+      address: employerProfile?.address || undefined,
+      companySize: employerProfile?.companySize || undefined,
+      fullname: employerProfile?.fullname || undefined,
+      location: employerProfile?.location || undefined,
+      phoneNumber: employerProfile?.phoneNumber || undefined,
+      website: employerProfile?.website || undefined,
     },
   });
 
@@ -198,7 +198,7 @@ const EditEmployerProfileForm = ({
           onChange={(val) => setValue("about", val)}
           hasError={!!errors.about}
           errorMessage={errors.about?.message}
-          value={employerProfile.about || ""}
+          value={employerProfile?.about || ""}
         />
       </Card>
 

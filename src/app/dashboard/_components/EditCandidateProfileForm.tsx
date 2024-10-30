@@ -30,14 +30,14 @@ type CandidateWithAvatar = Prisma.CandidateProfileGetPayload<{
 }>;
 
 type EditCandidateProfileFormProps = {
-  candidateProfile: CandidateWithAvatar;
+  candidateProfile: CandidateWithAvatar | null;
 };
 
 const EditCandidateProfileForm = ({
   candidateProfile,
 }: EditCandidateProfileFormProps) => {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(
-    candidateProfile.candidate?.avatar?.url || null,
+    candidateProfile?.candidate?.avatar?.url || null,
   );
   const [isPending, startTranstion] = useTransition();
 
@@ -49,16 +49,16 @@ const EditCandidateProfileForm = ({
   } = useForm<editCandidateProfileSchemaType>({
     resolver: zodResolver(editCandidateProfileSchema),
     defaultValues: {
-      address: candidateProfile.address || undefined,
-      dob: candidateProfile.dateOfBirth || undefined,
-      fullname: candidateProfile.fullname || undefined,
-      gender: candidateProfile.gender || undefined,
-      location: candidateProfile.location || undefined,
-      phoneNumber: candidateProfile.phoneNumber || undefined,
-      salary: candidateProfile.salary || undefined,
-      salaryType: candidateProfile.salaryType || undefined,
-      title: candidateProfile.title || undefined,
-      bio: candidateProfile.bio || undefined,
+      address: candidateProfile?.address || undefined,
+      dob: candidateProfile?.dateOfBirth || undefined,
+      fullname: candidateProfile?.fullname || undefined,
+      gender: candidateProfile?.gender || undefined,
+      location: candidateProfile?.location || undefined,
+      phoneNumber: candidateProfile?.phoneNumber || undefined,
+      salary: candidateProfile?.salary || undefined,
+      salaryType: candidateProfile?.salaryType || undefined,
+      title: candidateProfile?.title || undefined,
+      bio: candidateProfile?.bio || undefined,
     },
   });
 
@@ -149,17 +149,25 @@ const EditCandidateProfileForm = ({
 
         <div className="flex w-full flex-col items-center gap-5 md:flex-row">
           <SelectBox
-            options={["MALE", "FEMALE"]}
+            options={[
+              { value: "MALE", label: "Male" },
+              { value: "FEMALE", label: "Female" },
+            ]}
             label="Gender"
             variant="primary"
             defaultText="Select your gender"
             onChange={(val: string) => setValue("gender", val as Gender)}
             hasError={!!errors.gender}
             errorMessage={errors.gender?.message}
-            value={candidateProfile.gender || ""}
+            value={candidateProfile?.gender || ""}
           />
           <SelectBox
-            options={["Web Development", "Design", "Marketing", "Finance"]}
+            options={[
+              { value: "Web Development", label: "Web Development" },
+              { value: "Design", label: "Design" },
+              { value: "Marketing", label: "Marketing" },
+              { value: "Finance", label: "Finance" },
+            ]}
             label="Category"
             variant="primary"
             defaultText="Select category"
@@ -200,14 +208,19 @@ const EditCandidateProfileForm = ({
           />
 
           <SelectBox
-            options={["HOURLY", "DAILY", "MONTHLY", "YEARLY"]}
+            options={[
+              { value: "HOURLY", label: "Hourly" },
+              { value: "DAILY", label: "Daily" },
+              { value: "MONTHLY", label: "Monthly" },
+              { value: "YEARLY", label: "Yearly" },
+            ]}
             label="Salary Type"
             variant="primary"
             defaultText="Select your salary type"
             onChange={(val) => setValue("salaryType", val as SalaryType)}
             hasError={!!errors.salaryType}
             errorMessage={errors.salaryType?.message}
-            value={candidateProfile.salaryType || ""}
+            value={candidateProfile?.salaryType || ""}
           />
         </div>
 
@@ -237,7 +250,7 @@ const EditCandidateProfileForm = ({
             onChange={(val) => setValue("bio", val)}
             hasError={!!errors.bio}
             errorMessage={errors.bio?.message}
-            value={candidateProfile.bio || ""}
+            value={candidateProfile?.bio || ""}
           />
         </div>
       </Card>

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SalaryType, Gender } from "@prisma/client";
+import { SalaryType, Gender, JobType } from "@prisma/client";
 
 const requiredField = (fieldName: string) => {
   return z
@@ -150,3 +150,25 @@ export const editEmployerProfileSchema = z.object({
 export type editEmployerProfileSchemaType = z.infer<
   typeof editEmployerProfileSchema
 >;
+
+export const createJobSchema = z.object({
+  title: requiredField("title").min(3, {
+    message: "Job title must be at least 3 characters",
+  }),
+  jobDesc: z.string().trim().min(1, { message: "Job description is required" }),
+  category: requiredField("category"),
+  jobType: z.nativeEnum(JobType),
+  salaryType: z.nativeEnum(SalaryType),
+  minSalary: z.coerce
+    .number()
+    .nonnegative("Minimum salary must be positive")
+    .min(1, { message: "Minimum salary is required" }),
+  maxSalary: z.coerce
+    .number()
+    .nonnegative("Maximum salary must be positive")
+    .min(1, { message: "Maximum salary is required" }),
+  location: requiredField("location"),
+  address: z.string().trim().optional(),
+});
+
+export type createJobSchemaType = z.infer<typeof createJobSchema>;

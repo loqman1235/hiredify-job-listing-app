@@ -85,7 +85,11 @@ const TextEditor = ({
 
           placeholder,
         }}
-        onChange={(event, editor) => onChange(editor.getData())}
+        onChange={(event, editor) => {
+          const data = editor.getData();
+
+          onChange(data);
+        }}
       />
 
       {hasError && <p className="text-destructive">{errorMessage}</p>}

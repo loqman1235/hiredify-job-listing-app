@@ -1,9 +1,11 @@
 import { validateRequest } from "@/auth";
 import { redirect } from "next/navigation";
 import CreateJobForm from "../_components/CreateJobForm";
+import prisma from "@/libs/prisma";
 
 const CreateJobPage = async () => {
   const { user } = await validateRequest();
+  const categories = await prisma.category.findMany();
 
   if (user?.role !== "EMPLOYER") {
     return redirect("/dashboard");
@@ -15,7 +17,7 @@ const CreateJobPage = async () => {
         Create a new job
       </h3>
 
-      <CreateJobForm />
+      <CreateJobForm categories={categories} />
     </div>
   );
 };

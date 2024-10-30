@@ -6,7 +6,7 @@ import { PiCaretDown } from "react-icons/pi";
 type SelectBoxProps = {
   variant?: "primary" | "secondary";
   label?: string;
-  options: string[];
+  options: { value: string; label: string }[];
   defaultText?: string;
   value?: string;
   onChange?: (val: string) => void;
@@ -29,7 +29,7 @@ const SelectBox = ({
   defaultText = "Select an option",
 }: SelectBoxProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedVal, setSelectedVal] = useState("");
+  const [selectedLabel, setSelectedLabel] = useState(defaultText);
   const selectRef = useRef<HTMLDivElement>(null);
 
   const toggleSelectDropdown = () => {
@@ -37,11 +37,10 @@ const SelectBox = ({
   };
 
   const handleSelect = (val: string) => {
-    setSelectedVal(val);
+    const selectedOption = options.find((option) => option.value === val);
+    setSelectedLabel(selectedOption ? selectedOption.label : defaultText);
     setIsOpen(false);
-    if (onChange) {
-      onChange(val);
-    }
+    onChange?.(val);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -61,41 +60,51 @@ const SelectBox = ({
   }, []);
 
   useEffect(() => {
-    if (value) {
-      setSelectedVal(value);
+    const selectedOption = options.find((option) => option.value === value);
+    if (selectedOption) {
+      setSelectedLabel(selectedOption.label);
     }
-  }, [value]);
+  }, [value, options]);
 
   return (
-    <div className={`w-full`}>
-      {variant === "primary" && (
-        <label onClick={toggleSelectDropdown} className="text-sm font-medium">
-          {label}{" "}
-          {variant === "primary" && isRequired && (
-            <span className="text-destructive">*</span>
-          )}
+    <div className="w-full">
+      {label && (
+        <label className="text-sm font-medium" onClick={toggleSelectDropdown}>
+          {label} {isRequired && <span className="text-destructive">*</span>}
         </label>
       )}
       <div
         ref={selectRef}
         className={cn(
-          `relative cursor-pointer p-3 ${hasError && "border-destructive"} ${variant === "primary" && "rounded-md border border-border"}`,
+          "relative cursor-pointer p-3",
+          hasError && "border-destructive",
+          variant === "primary" && "rounded-md border border-border",
           className,
         )}
         onClick={toggleSelectDropdown}
       >
-        {/* SELECTED VALUE */}
+        {/* SELECTED LABEL */}
         <span
-          className={`font-light text-text-secondary ${selectedVal && "!text-text-primary"}`}
+          className={cn(
+            "font-light text-text-secondary",
+            selectedLabel && "!text-text-primary",
+          )}
         >
-          {selectedVal ? selectedVal : defaultText}
+          {selectedLabel || defaultText}
         </span>
         <button
           type="button"
-          className={`absolute top-1/2 -translate-y-1/2 ${variant === "primary" ? "right-3" : "right-0"}`}
+          aria-expanded={isOpen}
+          className={cn(
+            "absolute right-3 top-1/2 -translate-y-1/2",
+            variant === "secondary" && "right-0",
+          )}
         >
           <PiCaretDown
-            className={`size-5 text-[var(--text-icon)] transition ${isOpen && "rotate-180"}`}
+            className={cn(
+              "size-5 text-[var(--text-icon)] transition-transform",
+              isOpen && "rotate-180",
+            )}
           />
         </button>
 
@@ -104,18 +113,18 @@ const SelectBox = ({
           <ul
             role="listbox"
             onClick={(e) => e.stopPropagation()}
-            className={`absolute left-0 top-full z-40 w-full space-y-5 rounded-xl border border-border bg-foreground p-5 shadow-xl`}
+            className="absolute left-0 top-full z-40 w-full space-y-5 rounded-xl border border-border bg-foreground p-5 shadow-xl"
           >
             {/* OPTIONS */}
             {options.map((option) => (
               <li
+                key={option.value}
                 role="option"
-                aria-selected={selectedVal === option}
-                key={option}
+                aria-selected={selectedLabel === option.label}
                 className="cursor-pointer text-text-secondary transition hover:text-text-primary"
-                onClick={() => handleSelect(option)}
+                onClick={() => handleSelect(option.value)}
               >
-                {option}
+                {option.label}
               </li>
             ))}
           </ul>

@@ -38,11 +38,11 @@ const Profile = async () => {
     <div>
       <h3 className="mb-5 text-2xl font-bold tracking-tight">Edit Profile</h3>
 
-      {user?.role === "CANDIDATE" && candidateProfile && (
+      {user?.role === "CANDIDATE" && (
         <EditCandidateProfileForm candidateProfile={candidateProfile} />
       )}
 
-      {user?.role === "EMPLOYER" && employerProfile && (
+      {user?.role === "EMPLOYER" && (
         <EditEmployerProfileForm employerProfile={employerProfile} />
       )}
     </div>
