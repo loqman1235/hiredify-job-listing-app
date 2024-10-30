@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/common/Table";
-import { PiPencilSimpleLine, PiTrash } from "react-icons/pi";
+import { PiArrowSquareOut, PiPencilSimpleLine, PiTrash } from "react-icons/pi";
 // import { postedJobsData } from "@/data";
 import Link from "next/link";
 import Badge from "@/components/common/Badge";
@@ -123,6 +123,16 @@ const JobsPage = async () => {
                     </AlertDialog>
                     <Button variant="secondary" className="px-1.5 py-1.5">
                       <PiPencilSimpleLine className="size-4" />
+                    </Button>
+
+                    <Button
+                      variant="secondary"
+                      className="px-1.5 py-1.5"
+                      asChild
+                    >
+                      <Link href={`/dashboard/jobs/${job.id}`}>
+                        <PiArrowSquareOut className="size-4" />
+                      </Link>
                     </Button>
                   </div>
                 </TableData>
