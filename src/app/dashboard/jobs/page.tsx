@@ -130,7 +130,11 @@ const JobsPage = async () => {
                       className="px-1.5 py-1.5"
                       asChild
                     >
-                      <Link href={`/dashboard/jobs/${job.id}`}>
+                      <Link
+                        href={`/dashboard/jobs/${job.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <PiArrowSquareOut className="size-4" />
                       </Link>
                     </Button>
