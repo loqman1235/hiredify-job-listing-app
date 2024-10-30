@@ -51,6 +51,8 @@ const CreateJobForm = ({ categories }: CreateJobFormProps) => {
   });
 
   const onSubmit = (values: createJobSchemaType) => {
+    console.log(values);
+
     startTranstion(async () => {
       const result = await createJob(values);
       setValue("jobDesc", "");

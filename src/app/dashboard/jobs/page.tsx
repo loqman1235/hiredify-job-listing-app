@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/common/Table";
-import { PiPencilSimpleLine, PiX } from "react-icons/pi";
+import { PiPencilSimpleLine } from "react-icons/pi";
 // import { postedJobsData } from "@/data";
 import Link from "next/link";
 import Badge from "@/components/common/Badge";
@@ -16,6 +16,7 @@ import prisma from "@/libs/prisma";
 import { redirect } from "next/navigation";
 import { validateRequest } from "@/auth";
 import { dateFormatter } from "@/libs/utils";
+import DeleteJobBtn from "../_components/DeleteJobBtn";
 
 const JobsPage = async () => {
   const { user } = await validateRequest();
@@ -82,9 +83,7 @@ const JobsPage = async () => {
 
                 <TableData className="flex min-h-[80px] items-center">
                   <div className="flex items-center gap-2">
-                    <Button variant="destructive" className="px-1.5 py-1.5">
-                      <PiX className="size-4" />
-                    </Button>
+                    <DeleteJobBtn jobId={job.id} />
                     <Button variant="secondary" className="px-1.5 py-1.5">
                       <PiPencilSimpleLine className="size-4" />
                     </Button>

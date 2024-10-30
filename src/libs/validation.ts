@@ -169,7 +169,7 @@ export const createJobSchema = z.object({
     .min(1, { message: "Maximum salary is required" }),
   location: requiredField("location"),
   address: z.string().trim().optional(),
-  expiresAt: z.date({ message: "Expires at is required" }).optional(),
+  expiresAt: z.coerce.date().optional(),
 });
 
 export type createJobSchemaType = z.infer<typeof createJobSchema>;

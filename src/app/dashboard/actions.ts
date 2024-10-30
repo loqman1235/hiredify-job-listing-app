@@ -10,6 +10,8 @@ import {
   editEmployerProfileSchema,
 } from "@/libs/validation";
 import { revalidatePath } from "next/cache";
+import { isRedirectError } from "next/dist/client/components/redirect";
+import { redirect } from "next/navigation";
 
 export const updateCandidateProfile = async (
   formData: FormData,
@@ -264,6 +266,7 @@ export const createJob = async (
     }
 
     const {
+      expiresAt,
       category,
       jobDesc,
       jobType,
@@ -287,11 +290,16 @@ export const createJob = async (
         type: jobType,
         address,
         employerId: user.id,
+        expiresAt,
       },
     });
     revalidatePath("/dashboard/jobs");
+    redirect("/dashboard/jobs");
   } catch (error) {
     console.log(error);
+    if (isRedirectError(error)) {
+      throw error;
+    }
     return {
       error: "Something went wrong",
     };
@@ -340,3 +348,31 @@ async function uploadAvatarToCloudinary(
 async function removeAvatarFromCloudinary(publicId: string) {
   await cloudinary.uploader.destroy(publicId);
 }
+
+export const deleteJob = async (jobId: string) => {
+  try {
+    const { session, user } = await validateRequest();
+
+    if (!session) {
+      throw new Error("Not Authorized");
+    }
+
+    if (user === null) {
+      throw new Error("Not Authorized");
+    }
+
+    await prisma.job.delete({
+      where: {
+        id: jobId,
+        employerId: user.id,
+      },
+    });
+
+    revalidatePath("/dashboard/jobs");
+  } catch (error) {
+    console.log(error);
+    return {
+      error: "Something went wrong",
+    };
+  }
+};
