@@ -10,8 +10,8 @@ import {
   editEmployerProfileSchema,
 } from "@/libs/validation";
 import { revalidatePath } from "next/cache";
-import { isRedirectError } from "next/dist/client/components/redirect";
-import { redirect } from "next/navigation";
+// import { isRedirectError } from "next/dist/client/components/redirect";
+// import { redirect } from "next/navigation";
 
 export const updateCandidateProfile = async (
   formData: FormData,
@@ -265,6 +265,17 @@ export const createJob = async (
       };
     }
 
+    // fetch employer profile
+    const employerProfile = await prisma.employerProfile.findUnique({
+      where: {
+        employerId: user.id,
+      },
+    });
+
+    if (!employerProfile) {
+      throw new Error("Employer profile not found");
+    }
+
     const {
       expiresAt,
       category,
@@ -289,17 +300,17 @@ export const createJob = async (
         title,
         type: jobType,
         address,
-        employerId: user.id,
+        employerId: employerProfile.id,
         expiresAt,
       },
     });
     revalidatePath("/dashboard/jobs");
-    redirect("/dashboard/jobs");
+    // redirect("/dashboard/jobs");
   } catch (error) {
     console.log(error);
-    if (isRedirectError(error)) {
-      throw error;
-    }
+    // if (isRedirectError(error)) {
+    //   throw error;
+    // }
     return {
       error: "Something went wrong",
     };

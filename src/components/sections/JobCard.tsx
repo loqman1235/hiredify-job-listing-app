@@ -1,3 +1,4 @@
+import { moneyFormatter } from "@/libs/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { PiBriefcase, PiMapPin, PiMoney } from "react-icons/pi";
@@ -24,8 +25,8 @@ const JobCard = ({
   return (
     <div className="flex items-center gap-5 rounded-xl border border-border bg-foreground p-5 shadow-sm">
       {/* LOGO */}
-      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-md bg-muted p-1">
-        <Image src={image} alt={title} width={50} height={50} />
+      <div className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-md bg-muted p-1">
+        <Image src={image} alt={title} layout="fill" objectFit="cover" />
       </div>
 
       <div className="flex flex-col gap-2">
@@ -55,12 +56,12 @@ const JobCard = ({
               <PiMoney className="size-4" />
             </span>
             <span className="text-sm text-text-secondary">
-              ${minSalary} - ${maxSalary}/year
+              {moneyFormatter(minSalary)} - {moneyFormatter(maxSalary)}/year
             </span>
           </li>
         </ul>
         <span className="mt-5 flex w-fit items-center justify-center rounded-full bg-primary/10 px-4 py-1 text-sm text-primary md:mt-0">
-          {type}
+          {type === "FULL_TIME" ? "Full Time" : type}
         </span>
       </div>
     </div>

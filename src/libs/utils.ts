@@ -12,3 +12,10 @@ export function dateFormatter(date: Date) {
     year: "numeric",
   });
 }
+
+export function moneyFormatter(amount: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(amount);
+}
