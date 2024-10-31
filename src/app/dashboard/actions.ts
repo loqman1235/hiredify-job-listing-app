@@ -10,8 +10,8 @@ import {
   editEmployerProfileSchema,
 } from "@/libs/validation";
 import { revalidatePath } from "next/cache";
-// import { isRedirectError } from "next/dist/client/components/redirect";
-// import { redirect } from "next/navigation";
+import { isRedirectError } from "next/dist/client/components/redirect";
+import { redirect } from "next/navigation";
 
 export const updateCandidateProfile = async (
   formData: FormData,
@@ -305,12 +305,12 @@ export const createJob = async (
       },
     });
     revalidatePath("/dashboard/jobs");
-    // redirect("/dashboard/jobs");
+    redirect("/dashboard/jobs");
   } catch (error) {
     console.log(error);
-    // if (isRedirectError(error)) {
-    //   throw error;
-    // }
+    if (isRedirectError(error)) {
+      throw error;
+    }
     return {
       error: "Something went wrong",
     };
