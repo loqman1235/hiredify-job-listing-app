@@ -17,6 +17,7 @@ const FeaturedJobsSection = async () => {
         select: {
           employer: {
             select: {
+              username: true,
               avatar: {
                 select: {
                   url: true,
@@ -28,10 +29,10 @@ const FeaturedJobsSection = async () => {
       },
     },
 
-    // take: 8,
+    take: 8,
   });
 
-  console.log(jobs[0]);
+  console.log("JOBS", jobs[0].employer.employer.username);
 
   return (
     <Section

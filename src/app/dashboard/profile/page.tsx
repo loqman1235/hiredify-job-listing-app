@@ -19,8 +19,6 @@ const Profile = async () => {
     },
   });
 
-  console.log(candidateProfile);
-
   const employerProfile = await prisma.employerProfile.findUnique({
     where: {
       employerId: user?.id,

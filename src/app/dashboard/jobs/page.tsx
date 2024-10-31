@@ -31,13 +31,19 @@ import {
 const JobsPage = async () => {
   const { user } = await validateRequest();
 
+  if (!user) {
+    return redirect("/login");
+  }
+
   if (user?.role !== "EMPLOYER") {
     return redirect("/dashboard");
   }
 
   const jobs = await prisma.job.findMany({
     where: {
-      employerId: user.id,
+      employer: {
+        employerId: user.id,
+      },
     },
     include: {
       applications: {

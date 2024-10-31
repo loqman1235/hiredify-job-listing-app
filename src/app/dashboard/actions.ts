@@ -300,7 +300,7 @@ export const createJob = async (
         title,
         type: jobType,
         address,
-        employerId: employerProfile.id,
+        employerId: employerProfile?.id,
         expiresAt,
       },
     });
