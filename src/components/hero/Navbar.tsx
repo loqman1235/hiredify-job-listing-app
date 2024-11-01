@@ -19,13 +19,13 @@ import {
   PiBriefcase,
   PiGauge,
   PiMegaphone,
-  PiUser,
+  PiUserCircle,
 } from "react-icons/pi";
 import LogoutBtnDropdown from "@/app/dashboard/_components/LogoutBtnDropdown";
 
 const candidateLinks = [
   { icon: PiGauge, text: "dashboard", href: "/dashboard" },
-  { icon: PiUser, text: "profile", href: "/dashboard/profile" },
+  { icon: PiUserCircle, text: "profile", href: "/dashboard/profile" },
 
   { icon: PiMegaphone, text: "my applied", href: "/dashboard/applied" },
   {
@@ -38,7 +38,7 @@ const candidateLinks = [
 
 const employerLinks = [
   { icon: PiGauge, text: "dashboard", href: "/dashboard" },
-  { icon: PiUser, text: "profile", href: "/dashboard/profile" },
+  { icon: PiUserCircle, text: "profile", href: "/dashboard/profile" },
   { icon: PiBriefcase, text: "my jobs", href: "/dashboard/jobs" },
   {
     icon: PiBookmarkSimple,
@@ -72,6 +72,12 @@ const Navbar = () => {
           </div>
         ) : (
           <div className="flex h-full items-center gap-5">
+            {user?.role === "EMPLOYER" && (
+              <Button className="px-4 py-2 text-sm" variant="primary" asChild>
+                <Link href="/dashboard/create-job">Create job</Link>
+              </Button>
+            )}
+
             <button className="relative">
               <PiChatCircleDots className="size-6 text-[var(--text-icon)] transition hover:text-text-primary" />
               <span className="absolute right-0 top-0 rounded-full border border-background bg-primary p-1 text-xs"></span>
