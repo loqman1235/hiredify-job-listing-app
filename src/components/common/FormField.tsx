@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/libs/utils";
+import { cn } from "@/lib/utils";
 import { forwardRef, useState } from "react";
 import { PiEye, PiEyeSlash } from "react-icons/pi";
 

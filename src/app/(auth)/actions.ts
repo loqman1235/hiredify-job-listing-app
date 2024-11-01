@@ -1,12 +1,12 @@
 "use server";
 
 import { lucia, validateRequest } from "@/auth";
-import prisma from "@/libs/prisma";
+import prisma from "@/lib/prisma";
 import {
   registerSchemaType,
   loginSchemaType,
   loginSchema,
-} from "@/libs/validation";
+} from "@/lib/validation";
 import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
 import { isRedirectError } from "next/dist/client/components/redirect";

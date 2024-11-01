@@ -1,14 +1,14 @@
 "use server";
 
 import { validateRequest } from "@/auth";
-import cloudinary from "@/libs/cloudinary";
-import prisma from "@/libs/prisma";
+import cloudinary from "@/lib/cloudinary";
+import prisma from "@/lib/prisma";
 import {
   createJobSchema,
   createJobSchemaType,
   editCandidateProfileSchema,
   editEmployerProfileSchema,
-} from "@/libs/validation";
+} from "@/lib/validation";
 import { revalidatePath } from "next/cache";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { redirect } from "next/navigation";

@@ -1,7 +1,7 @@
 import { validateRequest } from "@/auth";
 import { redirect } from "next/navigation";
 import CreateJobForm from "../_components/CreateJobForm";
-import prisma from "@/libs/prisma";
+import prisma from "@/lib/prisma";
 
 const CreateJobPage = async () => {
   const { user } = await validateRequest();

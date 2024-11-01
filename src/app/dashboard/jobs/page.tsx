@@ -12,10 +12,10 @@ import { PiArrowSquareOut, PiPencilSimpleLine, PiTrash } from "react-icons/pi";
 // import { postedJobsData } from "@/data";
 import Link from "next/link";
 import Badge from "@/components/common/Badge";
-import prisma from "@/libs/prisma";
+import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { validateRequest } from "@/auth";
-import { dateFormatter } from "@/libs/utils";
+import { dateFormatter } from "@/lib/utils";
 import DeleteJobBtn from "../_components/DeleteJobBtn";
 import {
   AlertDialog,

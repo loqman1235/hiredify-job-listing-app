@@ -7,7 +7,7 @@ import SelectBox from "@/components/common/SelectBox";
 import Button from "@/components/common/Button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createJobSchema, createJobSchemaType } from "@/libs/validation";
+import { createJobSchema, createJobSchemaType } from "@/lib/validation";
 import { Category, JobType, SalaryType } from "@prisma/client";
 import { useTransition } from "react";
 import { createJob } from "../actions";

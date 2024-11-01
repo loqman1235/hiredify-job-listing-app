@@ -7,6 +7,46 @@ import { usePathname } from "next/navigation";
 import UserAvatar from "../common/UserAvatar";
 import { PiBell, PiChatCircleDots } from "react-icons/pi";
 import { useSession } from "@/context/SessionProvider";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import {
+  PiBookmarkSimple,
+  PiBriefcase,
+  PiGauge,
+  PiMegaphone,
+  PiUser,
+} from "react-icons/pi";
+import LogoutBtnDropdown from "@/app/dashboard/_components/LogoutBtnDropdown";
+
+const candidateLinks = [
+  { icon: PiGauge, text: "dashboard", href: "/dashboard" },
+  { icon: PiUser, text: "profile", href: "/dashboard/profile" },
+
+  { icon: PiMegaphone, text: "my applied", href: "/dashboard/applied" },
+  {
+    icon: PiBookmarkSimple,
+    text: "shortlist jobs",
+    href: "/dashboard/shortlist-jobs",
+  },
+  // { icon: PiChatCircleDots, text: "messages", href: "/dashboard/messages" },
+] as const;
+
+const employerLinks = [
+  { icon: PiGauge, text: "dashboard", href: "/dashboard" },
+  { icon: PiUser, text: "profile", href: "/dashboard/profile" },
+  { icon: PiBriefcase, text: "my jobs", href: "/dashboard/jobs" },
+  {
+    icon: PiBookmarkSimple,
+    text: "shortlist candidates",
+    href: "/dashboard/shortlist-candidates",
+  },
+] as const;
+
 const Navbar = () => {
   const { session, user } = useSession();
   const pathname = usePathname();
@@ -40,7 +80,52 @@ const Navbar = () => {
               <PiBell className="size-6 text-[var(--text-icon)] transition hover:text-text-primary" />
               <span className="absolute right-0 top-0 rounded-full border border-background bg-primary p-1 text-xs"></span>
             </button>
-            <UserAvatar className="h-10 w-10" avatarUrl={user?.avatar?.url} />
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="border-none outline-none ring-0 focus:border-none focus:outline-none focus:ring-0">
+                  <UserAvatar
+                    avatarUrl={user?.avatar?.url}
+                    className="size-8"
+                  />
+                </button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent className="min-w-56" align="end">
+                {user?.role === "CANDIDATE" &&
+                  candidateLinks.map((link) => (
+                    <DropdownMenuItem
+                      className="capitalize"
+                      key={link.text}
+                      asChild
+                    >
+                      <Link href={link.href}>
+                        <link.icon className="size-4 shrink-0" />
+                        {link.text}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+
+                {user?.role === "EMPLOYER" &&
+                  employerLinks.map((link) => (
+                    <DropdownMenuItem
+                      className="capitalize"
+                      key={link.text}
+                      asChild
+                    >
+                      <Link href={link.href}>
+                        <link.icon className="size-4 shrink-0" />
+                        {link.text}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <LogoutBtnDropdown />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         )}
       </div>

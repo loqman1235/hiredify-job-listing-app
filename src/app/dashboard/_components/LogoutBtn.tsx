@@ -1,6 +1,6 @@
 "use client";
 import { logoutAction } from "@/app/(auth)/actions";
-import { cn } from "@/libs/utils";
+import { cn } from "@/lib/utils";
 import { PiSignOut } from "react-icons/pi";
 
 type LogoutBtnProps = {

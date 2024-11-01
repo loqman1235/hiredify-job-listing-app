@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   editEmployerProfileSchema,
   editEmployerProfileSchemaType,
-} from "@/libs/validation";
+} from "@/lib/validation";
 import { useEffect, useState, useTransition } from "react";
 import { updateEmployerProfile } from "../actions";
 import { toast } from "react-toastify";

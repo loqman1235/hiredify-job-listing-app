@@ -1,4 +1,4 @@
-import prisma from "@/libs/prisma";
+import prisma from "@/lib/prisma";
 import JobCard from "./JobCard";
 import Section from "./Section";
 

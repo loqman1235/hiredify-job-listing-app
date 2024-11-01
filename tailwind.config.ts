@@ -24,6 +24,11 @@ const config: Config = {
         warning: "hsl(var(--warning))",
         danger: "hsl(var(--danger))",
         "input-placeholder": "hsl(var(--input-placeholder))",
+
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
       },
     },
   },

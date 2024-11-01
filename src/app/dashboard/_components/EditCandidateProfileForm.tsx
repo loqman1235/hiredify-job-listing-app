@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import {
   editCandidateProfileSchema,
   editCandidateProfileSchemaType,
-} from "@/libs/validation";
+} from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Gender, Prisma, SalaryType } from "@prisma/client";
 import { updateCandidateProfile } from "../actions";

@@ -1,4 +1,4 @@
-import { moneyFormatter } from "@/libs/utils";
+import { moneyFormatter } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { PiBriefcase, PiMapPin, PiMoney } from "react-icons/pi";

@@ -1,7 +1,7 @@
 import { validateRequest } from "@/auth";
 import EditCandidateProfileForm from "../_components/EditCandidateProfileForm";
 import EditEmployerProfileForm from "../_components/EditEmployerProfileForm";
-import prisma from "@/libs/prisma";
+import prisma from "@/lib/prisma";
 
 const Profile = async () => {
   const { user } = await validateRequest();

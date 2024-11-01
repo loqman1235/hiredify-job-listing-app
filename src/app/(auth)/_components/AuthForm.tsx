@@ -10,7 +10,7 @@ import {
   registerSchemaType,
   loginSchema,
   loginSchemaType,
-} from "@/libs/validation";
+} from "@/lib/validation";
 import { loginAction, registerAction } from "../actions";
 import { PiCircleNotch } from "react-icons/pi";
 

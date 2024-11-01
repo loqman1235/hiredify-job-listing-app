@@ -54,6 +54,10 @@
   --doughnut-chart-rejected-border: #f44336;
   --doughnut-chart-hired-bg: #4caf50;
   --doughnut-chart-hired-border: #4caf50;
+
+  /* POPOVER */
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 3.9%;
 }
 
 @layer base {
