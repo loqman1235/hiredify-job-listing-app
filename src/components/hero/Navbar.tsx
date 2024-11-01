@@ -5,7 +5,7 @@ import NavLinks from "./NavLinks";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import UserAvatar from "../common/UserAvatar";
-import { PiBell, PiChatCircleDots } from "react-icons/pi";
+import { PiBell, PiChatCircleDots, PiPlus } from "react-icons/pi";
 import { useSession } from "@/context/SessionProvider";
 import {
   DropdownMenu,
@@ -74,7 +74,10 @@ const Navbar = () => {
           <div className="flex h-full items-center gap-5">
             {user?.role === "EMPLOYER" && (
               <Button className="px-4 py-2 text-sm" variant="primary" asChild>
-                <Link href="/dashboard/create-job">Create job</Link>
+                <Link href="/dashboard/create-job">
+                  <PiPlus className="size-4" />
+                  Create Job
+                </Link>
               </Button>
             )}
 
